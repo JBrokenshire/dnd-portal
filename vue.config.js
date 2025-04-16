@@ -2,6 +2,9 @@ const path = require('path')
 
 module.exports = {
   publicPath: "/",
+  devServer: {
+    host: 'localdnd.com'
+  },
   configureWebpack: {
     resolve: {
       alias: {

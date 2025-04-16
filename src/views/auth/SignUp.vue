@@ -4,17 +4,16 @@
       <b-img :src="backgroundImage" />
     </div>
 
-
     <b-card
       class="col-3 shadow-lg"
       style="min-width: 320px;"
-      title="Login"
+      title="Sign Up"
     >
       <validation-observer
         ref="observer"
         v-slot="{ handleSubmit, invalid }"
       >
-        <b-form @submit.stop.prevent="handleSubmit(login)">
+        <b-form @submit.stop.prevent="handleSubmit(signUp)">
           <!-- Username -->
           <section class="mb-2">
             <label>Username</label>
@@ -65,6 +64,36 @@
             </validation-provider>
           </section>
 
+          <!-- Confirm Password -->
+          <section class="mb-2">
+            <label>Confirm Password</label>
+            <validation-provider
+              v-slot="validationContext"
+              :rules="{ required: true }"
+              name="Confirm Password"
+            >
+              <section class="d-flex align-items-center">
+                <b-form-input
+                  v-model="confirmPassword"
+                  :state="getValidationState(validationContext)"
+                  :type="passwordFieldType"
+                  class="mr-2"
+                  placeholder="●●●●●●●●"
+                />
+              </section>
+
+              <b-form-invalid-feedback>
+                {{ validationContext.errors[0] }}
+              </b-form-invalid-feedback>
+              <small
+                v-if="password !== confirmPassword"
+                class="text-danger"
+              >
+                Passwords do not match.
+              </small>
+            </validation-provider>
+          </section>
+
           <section class="my-4">
             <b-btn
               :disabled="invalid || loading"
@@ -72,7 +101,7 @@
               type="submit"
               variant="primary"
             >
-              Login
+              Sign Up
             </b-btn>
           </section>
         </b-form>
@@ -82,8 +111,8 @@
       <section
         class="mb-2 full-width text-center"
       >
-        Don't have an account?
-        <router-link :to="{name: 'auth-sign-up'}">Sign Up</router-link>
+        Already have an account?
+        <router-link :to="{name: 'auth-login'}">Login</router-link>
       </section>
     </b-card>
   </div>
@@ -91,17 +120,19 @@
 </template>
 
 <script>
-  import auth from "@/auth/auth";
-  import HelperService from "@/services/HelperService";
   import {togglePasswordVisibility} from "@core/mixins/ui/forms"
+  import UserService from "@/services/UserService";
+  import HelperService from "@/services/HelperService";
+  import auth from "@/auth/auth";
 
   export default {
-    name: "Login",
+    name: "SignUp",
     mixins: [togglePasswordVisibility],
     data() {
       return {
-        password: "",
         username: "",
+        password: "",
+        confirmPassword: "",
         status: "",
         loading: false,
         backgroundImage: require('@/assets/images/pages/login.jpg'),
@@ -116,22 +147,36 @@
       getValidationState({dirty, validated, valid = null}) {
         return dirty || validated ? valid : null;
       },
-      async login() {
+      async signUp() {
         this.loading = true
         try {
-          const dto = {
+          const createUserDTO = {
+            username: this.username,
+            password: this.password,
+            confirm_password: this.confirmPassword
+          }
+
+          await UserService.create(createUserDTO)
+
+          const loginDTO = {
             username: this.username,
             password: this.password,
           }
-
-          const res = await auth.login(dto)
+          const res = await auth.login(loginDTO)
           auth.setToken(res.data.access_token)
           await auth.refreshCurrentUser()
 
-          HelperService.successToast(this.$toast, `Welcome back ${auth.getCurrentUser().username}!`)
+          HelperService.successToast(this.$toast, `Welcome ${auth.getCurrentUser().username}!`)
           await this.$router.push({name: 'home'})
         } catch (err) {
-          console.error(err)
+          const res = err.response;
+          let errorText = "Could not create user, please refresh and try again";
+
+          if (res && res.data.error) {
+            errorText = res.data.error;
+          }
+
+          HelperService.errorToast(this.$toast, err, errorText)
         } finally {
           this.loading = false
         }

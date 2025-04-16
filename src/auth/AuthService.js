@@ -90,9 +90,7 @@ export default class AuthService {
         this.isAlreadyFetchingAccessToken = false
         this.setToken(r.data.access_token)
         this.setCurrentUser(r.data.user_data)
-      } catch (err) {
-        // Log err
-        console.error(err)
+      } catch (_) {
       } finally {
         this.initialised = true
       }

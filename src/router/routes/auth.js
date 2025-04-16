@@ -10,4 +10,15 @@ export default [
       layout: "full",
     },
   },
+  {
+    path: "/auth/sign-up",
+    name: "auth-sign-up",
+    component: () => import("@/views/auth/SignUp.vue"),
+    meta: {
+      resource: "Auth",
+      action: "Read",
+      redirectIfLoggedIn: true,
+      layout: "full",
+    },
+  },
 ]

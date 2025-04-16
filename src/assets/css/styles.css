@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+a, a:hover {
+    text-decoration: none;
+}
+
 /* Image Styles */
 .background-image {
     position: absolute;

@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div>TEST</div>
+    <div>{{ currentUser && currentUser.username }}</div>
     <b-button
       :disabled="loading"
       @click="logout"
-    >Logout
+    >
+      Logout
     </b-button>
   </div>
 </template>
@@ -19,6 +20,11 @@
       return {
         loading: false,
       }
+    },
+    computed: {
+      currentUser() {
+        return auth.getCurrentUser();
+      },
     },
     methods: {
       async logout() {
