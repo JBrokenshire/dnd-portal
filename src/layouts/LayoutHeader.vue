@@ -1,8 +1,10 @@
 <template>
-  <div class="min-vh-100">
+  <div class="page">
     <page-header />
 
-    <slot />
+    <div class="content padding-x">
+      <slot />
+    </div>
 
     <page-footer />
   </div>
@@ -22,5 +24,14 @@
 </script>
 
 <style scoped>
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
+.content {
+  flex-grow: 1
+}
 </style>

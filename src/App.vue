@@ -5,7 +5,7 @@
     class="d-flex flex-column"
   >
     <template #default>
-      <router-view class="min-vw-100 flex-grow-1" />
+      <router-view />
     </template>
   </component>
 </template>

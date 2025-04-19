@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -5,11 +7,37 @@
     font-family: "IM Fell English", serif !important;
 }
 
-/* General Styles */
+:root {
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1400px;
+}
+
+/* START: General Styles */
+.padding-x {
+    padding-inline: 2rem;
+}
+
+@media (min-width: var(--breakpoint-md)) {
+    .padding-x {
+        padding-inline: 4rem;
+    }
+}
+
+
 .flex-center {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .cursor-pointer {
@@ -20,7 +48,9 @@ a, a:hover {
     text-decoration: none;
 }
 
-/* Image Styles */
+/* END: General Styles */
+
+/* START: Image Styles */
 .background-image {
     position: absolute;
     z-index: -10;
@@ -36,8 +66,17 @@ a, a:hover {
     object-fit: contain;
 }
 
-/* Form Styles */
+.logo {
+    width: 100px;
+    aspect-ratio: 1/1;
+}
+
+/* END:  Image Styles */
+
+/* START: Form Styles */
 label {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+/* END: Form Styles */

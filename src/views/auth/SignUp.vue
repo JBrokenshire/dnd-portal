@@ -5,8 +5,8 @@
     </div>
 
     <b-card
-      class="col-3 shadow-lg"
-      style="min-width: 320px;"
+      class="col-3 shadow-lg flex-grow-1 mx-4"
+      style="max-width:420px; min-width: 280px;"
       title="Sign Up"
     >
       <validation-observer

@@ -1,13 +1,12 @@
 <template>
-  <div class="position-relative flex-center">
+  <div class="position-relative min-vh-100 flex-center">
     <div class="background-image">
       <b-img :src="backgroundImage" />
     </div>
 
-
     <b-card
-      class="col-3 shadow-lg"
-      style="min-width: 320px;"
+      class="col-3 shadow-lg flex-grow-1 mx-4"
+      style="max-width:420px; min-width: 280px;"
       title="Login"
     >
       <validation-observer
@@ -82,7 +81,7 @@
       <section
         class="mb-2 full-width text-center"
       >
-        Don't have an account?
+        Don't have an account?<br>
         <router-link :to="{name: 'auth-sign-up'}">Sign Up</router-link>
       </section>
     </b-card>
@@ -135,9 +134,6 @@
         } finally {
           this.loading = false
         }
-      },
-      forgotPassword() {
-        this.$router.push({name: 'auth-forgot-password'})
       },
     },
   }

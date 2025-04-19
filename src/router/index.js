@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 import auth from "@/router/routes/auth"
 import {isUserLoggedIn} from "@/auth/utils"
 import {canNavigate} from "@/libs/acl/routeProtection"
+import character from "@/router/routes/character";
 
 const router = new VueRouter({
   mode: "history",
@@ -13,7 +14,8 @@ const router = new VueRouter({
       name: "home",
       component: () => import("@/views/home/Home.vue"),
     },
-    ...auth
+    ...auth,
+    ...character
   ],
 })
 
