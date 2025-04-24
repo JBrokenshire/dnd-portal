@@ -3,7 +3,7 @@
     ref="observer"
     v-slot="{ handleSubmit, invalid }"
   >
-    <form @submit.prevent="handleSubmit(createClass)">
+    <form @submit.prevent="handleSubmit(updateClass)">
       <div class="flex gap-4 mb-4">
         <section class="w-1/2">
           <label>Name</label>
@@ -13,7 +13,7 @@
             name="Name"
           >
             <text-input
-              v-model="newClass.name"
+              v-model="updatedClass.name"
               :invalid="!!validationContext.errors[0]"
               placeholder="Enter name"
             />
@@ -29,7 +29,7 @@
             name="Saves"
           >
             <multiselect-dropdown
-              v-model="newClass.saves"
+              v-model="updatedClass.saves"
               :max="2"
               :options="savesOptions"
               placeholder="Select saves"
@@ -48,7 +48,7 @@
             name="Primary Ability"
           >
             <text-input
-              v-model="newClass.primary_ability"
+              v-model="updatedClass.primary_ability"
               :invalid="!!validationContext.errors[0]"
               placeholder="Enter primary ability"
             />
@@ -64,7 +64,7 @@
             name="Hit Point Die"
           >
             <dropdown
-              v-model="newClass.hit_point_die_value"
+              v-model="updatedClass.hit_point_die_value"
               :invalid="!!validationContext.errors[0]"
               :options="hitPointDieOptions"
               placeholder="Select Hit Die"
@@ -81,26 +81,10 @@
           name="Short Description"
         >
           <text-input
-            v-model="newClass.short_description"
+            v-model="updatedClass.short_description"
             :invalid="!!validationContext.errors[0]"
             :rows="3"
             placeholder="Write a short description for the class"
-          />
-          <small class="text-danger">{{ validationContext.errors[0] }}</small>
-        </validation-provider>
-      </section>
-
-      <section class="mb-4">
-        <label>Logo (Optional)</label>
-        <validation-provider
-          v-slot="validationContext"
-          :rules="{ isImageFile }"
-          name="Image"
-        >
-          <file-input
-            v-model="image"
-            :invalid="!!validationContext.errors[0]"
-            placeholder="Browse files"
           />
           <small class="text-danger">{{ validationContext.errors[0] }}</small>
         </validation-provider>
@@ -118,7 +102,7 @@
           type="submit"
           variant="primary"
         >
-          Create
+          Update
         </c-button>
       </div>
     </form>
@@ -126,22 +110,25 @@
 </template>
 
 <script>
-  import ClassService from "@/services/ClassService";
-  import HelperService from "@/services/HelperService";
   import CButton from "@/components/ui/CustomButton.vue";
   import Dropdown from "@/components/ui/input/Dropdown.vue";
   import TextInput from "@/components/ui/input/TextInput.vue";
-  import FileInput from "@/components/ui/input/FileInput.vue";
   import {isImageFile} from "@core/utils/validations/validations";
   import MultiselectDropdown from "@/components/ui/input/MultiselectDropdown.vue";
 
   export default {
-    name: "CreateClassModal",
-    components: {MultiselectDropdown, Dropdown, CButton, FileInput, TextInput},
+    name: "EditClassModal",
+    components: {MultiselectDropdown, Dropdown, CButton, TextInput},
+    props: {
+      existing: {
+        type: Object,
+        required: true,
+      }
+    },
     data() {
       return {
         loading: false,
-        newClass: {
+        updatedClass: {
           name: "",
           saves: [],
           short_description: "",
@@ -149,6 +136,7 @@
           hit_point_die_value: null,
         },
         image: null,
+        imageChanged: false,
         hitPointDieOptions: [
           {label: "D4", value: 4},
           {label: "D6", value: 6},
@@ -163,7 +151,7 @@
           {label: "Intelligence", value: "Intelligence"},
           {label: "Wisdom", value: "Wisdom"},
           {label: "Charisma", value: "Charisma"},
-        ]
+        ],
       }
     },
     computed: {
@@ -171,39 +159,16 @@
         return isImageFile
       }
     },
+    mounted() {
+      this.updatedClass.name = this.$props.existing.name;
+      this.updatedClass.short_description = this.$props.existing.short_description;
+      this.updatedClass.primary_ability = this.$props.existing.primary_ability;
+      this.updatedClass.saves = this.$props.existing.saves;
+      this.updatedClass.hit_point_die_value = this.$props.existing.hit_point_die_value;
+    },
     methods: {
-      async createClass() {
-        this.loading = true;
-        try {
-          const dto = {
-            name: this.newClass.name,
-            saves: JSON.stringify(this.newClass.saves),
-            short_description: this.newClass.short_description,
-            primary_ability: this.newClass.primary_ability,
-            hit_point_die_value: this.newClass.hit_point_die_value,
-          }
-
-          const res = await ClassService.create(dto)
-
-          if (this.image) {
-            await ClassService.uploadLogo(res.data.id, this.image)
-          }
-
-          HelperService.successToast(this.$toast, "Class created successfully")
-          await this.$router.push({name: 'class-details', params: {id: res.data.id}})
-          this.$emit("close")
-        } catch (err) {
-          const res = err.response;
-          let errorText = "Could not create class, please refresh and try again";
-
-          if (res && res.data.error) {
-            errorText = res.data.error;
-          }
-
-          HelperService.errorToast(this.$toast, err, errorText)
-        } finally {
-          this.loading = false;
-        }
+      updateClass() {
+        this.$emit('update', this.updatedClass);
       }
     }
   }

@@ -14,6 +14,9 @@ export default {
   create(dto) {
     return axios.post(`${baseUrl}`, dto)
   },
+  update(id, dto) {
+    return axios.put(`${baseUrl}/${id}`, dto)
+  },
   uploadLogo(id, file) {
     const formData = new FormData()
     formData.append('file', file)
@@ -23,5 +26,8 @@ export default {
         'Content-Type': 'multipart/form-data',
       }
     })
+  },
+  delete(id) {
+    return axios.delete(`${baseUrl}/${id}`)
   }
 }

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center justify-center gap-4 mt-4">
+  <div
+    v-if="pages.length > 1"
+    class="flex items-center justify-center gap-4 mt-4"
+  >
     <div class="w-fit">
       <c-button
         :disabled="currentPage === 1"
