@@ -38,12 +38,19 @@
 
     <div
       v-if="totalCount > 0"
-      class="grid-3"
     >
-      <class-card
-        v-for="classType in classes"
-        :key="classType.id"
-        :class-type="classType"
+      <div class="grid-3 mb-8">
+        <class-card
+          v-for="classType in classes"
+          :key="classType.id"
+          :class-type="classType"
+        />
+      </div>
+
+      <pagination
+        :current-page="currentPage"
+        :total-pages="Math.ceil(totalCount / filters.page_size) "
+        @page-changed="getMoreClasses"
       />
     </div>
 
@@ -57,6 +64,7 @@
     <modal
       id="modal-create-class"
       :visible="showCreateClassModal"
+      size="md"
       title="Create Class"
       @close="closeModals"
     >
@@ -71,13 +79,14 @@
   import ClassService from "@/services/ClassService";
   import HelperService from "@/services/HelperService";
   import CButton from "@/components/ui/CustomButton.vue";
+  import Pagination from "@/components/ui/Pagination.vue";
   import TextInput from "@/components/ui/input/TextInput.vue";
   import ClassCard from "@/views/classes/sections/ClassCard.vue";
   import CreateClassModal from "@/views/classes/sections/CreateClassModal.vue";
 
   export default {
     name: "ClassList",
-    components: {CButton, TextInput, Modal, Card, ClassCard, CreateClassModal},
+    components: {Pagination, CButton, TextInput, Modal, Card, ClassCard, CreateClassModal},
     data() {
       return {
         headers: [

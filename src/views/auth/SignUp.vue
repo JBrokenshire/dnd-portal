@@ -26,15 +26,10 @@
                 <div>
                   <text-input
                     v-model="username"
-                    :class="{ 'border-danger-light': validationContext.errors.length }"
+                    :invalid="!!validationContext.errors[0]"
                     placeholder="Enter username..."
                   />
-                  <p
-                    v-if="validationContext.errors[0]"
-                    class="text-danger-light text-sm mt-1"
-                  >
-                    {{ validationContext.errors[0] }}
-                  </p>
+                  <small class="text-danger">{{ validationContext.errors[0] }}</small>
                 </div>
               </validation-provider>
             </div>
@@ -51,6 +46,7 @@
                   <text-input
                     v-model="password"
                     :class="{ 'border-danger-light': validationContext.errors.length }"
+                    :invalid="!!validationContext.errors[0]"
                     :type="passwordFieldType"
                     class="mr-2 flex-grow"
                     placeholder="●●●●●●●●"
@@ -62,12 +58,7 @@
                     @click="togglePasswordVisibility"
                   />
                 </div>
-                <p
-                  v-if="validationContext.errors[0]"
-                  class="text-danger-light text-sm mt-1"
-                >
-                  {{ validationContext.errors[0] }}
-                </p>
+                <small class="text-danger">{{ validationContext.errors[0] }}</small>
               </validation-provider>
             </div>
 
@@ -83,21 +74,14 @@
                   <text-input
                     v-model="confirmPassword"
                     :class="{ 'border-danger-light': validationContext.errors.length || (password !== confirmPassword) }"
+                    :invalid="!!validationContext.errors[0]"
                     :type="passwordFieldType"
                     placeholder="●●●●●●●●"
                   />
-                  <p
-                    v-if="validationContext.errors[0]"
-                    class="text-danger-light text-sm mt-1"
-                  >
+                  <small class="text-danger">
                     {{ validationContext.errors[0] }}
-                  </p>
-                  <p
-                    v-if="password !== confirmPassword"
-                    class="text-danger-light text-sm mt-1"
-                  >
-                    Passwords do not match.
-                  </p>
+                    {{ password !== confirmPassword && 'Passwords do not match' }}
+                  </small>
                 </div>
               </validation-provider>
             </div>

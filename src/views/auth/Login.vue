@@ -25,15 +25,10 @@
               >
                 <text-input
                   v-model="username"
-                  :invalid="validationContext.errors.length > 0"
+                  :invalid="!!validationContext.errors[0]"
                   placeholder="Enter username..."
                 />
-                <p
-                  v-if="validationContext.errors[0]"
-                  class="text-danger-light text-sm mt-1"
-                >
-                  {{ validationContext.errors[0] }}
-                </p>
+                <small class="text-danger">{{ validationContext.errors[0] }}</small>
               </validation-provider>
             </div>
 
@@ -49,6 +44,7 @@
                   <text-input
                     v-model="password"
                     :class="{ 'border-danger-light': validationContext.errors.length }"
+                    :invalid="!!validationContext.errors[0]"
                     :type="passwordFieldType"
                     class="mr-2 flex-grow"
                     placeholder="●●●●●●●●"
@@ -60,12 +56,7 @@
                     @click="togglePasswordVisibility"
                   />
                 </div>
-                <p
-                  v-if="validationContext.errors[0]"
-                  class="text-danger-light text-sm mt-1"
-                >
-                  {{ validationContext.errors[0] }}
-                </p>
+                <small class="text-danger">{{ validationContext.errors[0] }}</small>
               </validation-provider>
             </div>
 

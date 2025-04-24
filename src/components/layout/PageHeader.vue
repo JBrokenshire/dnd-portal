@@ -6,7 +6,7 @@
     <div class="flex items-center gap-4 text-lg">
       <router-link
         :to="{name: 'home'}"
-        class="hidden sm:block mr-4"
+        class="hidden sm:block sm:mr-4"
       >
         <img
           :src="websiteLogo"
@@ -15,32 +15,32 @@
         >
       </router-link>
       <router-link
-        :class="`nav-link px-4 ${activeLink === 'home' && 'active'}`"
+        :class="`nav-link md:mx-4 ${activeLink === 'home' && 'active'}`"
         :to="{name: 'home'}"
       >
         <h5>Home</h5>
       </router-link>
       <router-link
-        :class="`nav-link px-4 ${activeLink === 'characters' && 'active'}`"
+        :class="`nav-link md:mx-4 ${activeLink === 'characters' && 'active'}`"
         :to="{name: 'characters'}"
       >
         <h5>Characters</h5>
       </router-link>
       <router-link
-        :class="`nav-link px-4 ${activeLink === 'races' && 'active'}`"
+        :class="`nav-link md:mx-4 ${activeLink === 'races' && 'active'}`"
         :to="{name: 'races'}"
       >
         <h5>Races</h5>
       </router-link>
       <router-link
-        :class="`nav-link px-4 ${activeLink === 'classes' && 'active'}`"
+        :class="`nav-link md:mx-4 ${activeLink === 'classes' && 'active'}`"
         :to="{name: 'classes'}"
       >
         <h5>Classes</h5>
       </router-link>
     </div>
 
-    <div class="w-fit">
+    <div class="w-fit ml-2">
       <c-button
         class="d-flex align-items-center text-center shadow"
         variant="danger"

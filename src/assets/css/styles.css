@@ -79,11 +79,25 @@
 
 /* START: Form Styles */
 label {
-    display: block;
+    @apply block text-sm
 }
 
-input {
-    width: 100%;
+input,
+textarea {
+    @apply w-full
 }
 
 /* END: Form Styles */
+
+/* START: Animations */
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease-in-out;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
+/* END: Animations */

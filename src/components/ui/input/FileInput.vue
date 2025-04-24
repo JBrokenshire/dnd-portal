@@ -1,23 +1,12 @@
 <template>
   <div>
     <input
-      :class="state === false ? 'border-danger' : 'border-gray-light'"
+      :class="invalid ? 'border-danger focus:ring-danger focus:border-danger' : 'border-gray-light focus:ring-primary focus:border-primary'"
       accept="image/*"
-      class="px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
+      class="text-gray px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 text-sm"
       type="file"
       @change="onFileChange"
     >
-    <span
-      class="text-gray font-medium"
-    >
-      {{ fileName }}
-    </span>
-    <p
-      v-if="state === false"
-      class="mt-1 text-sm text-danger"
-    >
-      Invalid file. Please upload a valid image.
-    </p>
   </div>
 </template>
 
@@ -30,14 +19,9 @@
         type: String,
         default: 'Select file'
       },
-      state: {
+      invalid: {
         type: Boolean,
-        default: null
-      }
-    },
-    computed: {
-      fileName() {
-        return this.value ? this.value.name : '';
+        default: false
       }
     },
     methods: {
