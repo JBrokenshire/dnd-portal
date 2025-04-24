@@ -1,12 +1,13 @@
 <template>
-  <footer>
-    <div class="footer__links-container">
-      <div class="footer__logo-container">
+  <footer class="flex flex-col mt-5 border-t border-gray-300">
+    <div class="flex flex-col md:flex-row flex-wrap justify-between gap-5 p-5 sm:px-16">
+      <div class="flex flex-col gap-5">
         <router-link :to="{name: 'home'}">
-          <b-img
+          <img
             :src="websiteLogo"
-            class="footer__logo"
-          />
+            alt="D&D Dashboard"
+            class="w-[100px] aspect-square object-contain"
+          >
         </router-link>
         <p class="">
           D&D Dashboard 2025 <br>
@@ -14,19 +15,19 @@
         </p>
       </div>
 
-      <div class="footer__links">
+      <div class="flex flex-1 md:justify-end w-100 flex-wrap gap-[5rem] mt-10">
         <div
           v-for="group in linkGroups"
           :key="group.title"
-          class="footer__link-group"
+          class="flex flex-col gap-3 min-w-[170px]"
         >
-          <h4>{{ group.title }}</h4>
-          <div class="footer__link-list">
+          <div class="text-lg font-bold">{{ group.title }}</div>
+          <div class="flex flex-col gap-4">
             <a
               v-for="link in group.links"
               :key="link.title"
               :href="link.url"
-              class="footer_link"
+              class="nav-link"
             >
               {{ link.title }}
             </a>
@@ -35,10 +36,10 @@
       </div>
     </div>
 
-    <div class="footer__copyrights">
+    <div class="flex-between flex-wrap mt-5 border-t border-gray-300 p-5 sm:px-16">
       <p>@2025 D&D Dashboard. All rights reserved</p>
 
-      <div class="footer__copyrights-link">
+      <div class="flex flex-1 justify-center sm:justify-end mt-4 gap-5">
         <router-link :to="{name: 'privacy-policy'}">Privacy Policy</router-link>
         <router-link :to="{name: 'terms-and-conditions'}">Terms & Conditions</router-link>
       </div>
@@ -54,9 +55,16 @@
         websiteLogo: require("@/assets/images/website-logo.png"),
         linkGroups: [
           {
+            title: "About",
+            links: [
+              {title: "Vue Portal", url: "https://github.com/JBrokenshire/dnd-portal"},
+              {title: "Go API", url: "https://github.com/JBrokenshire/dnd-api"},
+            ]
+          },
+          {
             title: "Socials",
             links: [
-              {title: "GitHub", url: "https://github.com/JBrokenshire/dnd-portal"},
+              {title: "GitHub", url: "https://github.com/JBrokenshire"},
               {title: "Instagram", url: "https://www.instagram.com/jbrokenshire0/"},
               {title: "LinkedIn", url: "https://www.linkedin.com/in/jared-brokenshire-771448227/"},
             ],
@@ -68,104 +76,4 @@
 </script>
 
 <style scoped>
-footer {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1.25rem;
-  border-top: 1px solid lightgray;
-}
-
-.footer__links-container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: 1.25rem;
-}
-
-.footer__logo-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  gap: 1.25rem;
-}
-
-.footer__logo {
-  width: 100px;
-  aspect-ratio: 1;
-}
-
-.footer__logo img {
-  object-fit: contain;
-}
-
-.footer__links {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  flex-wrap: wrap;
-  gap: 5rem;
-  margin-top: 2.5rem;
-}
-
-
-.footer__link-group {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-  min-width: 170px;
-}
-
-.footer__link-list {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-}
-
-.footer__copyrights {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 2.5rem;
-  border-top: 1px solid lightgray;
-  padding: 1.25rem;
-}
-
-.footer__copyrights-link {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  margin-top: 1rem;
-  gap: 1.25rem;
-}
-
-/* sm Breakpoint */
-@media (min-width: 576px) {
-  .footer__links-container {
-    padding-inline: 4rem;
-  }
-
-  .footer__copyrights {
-    padding-inline: 4rem;
-  }
-
-  .footer__copyrights-link {
-    justify-content: end;
-  }
-}
-
-/* md Breakpoint */
-@media (min-width: 768px) {
-
-  .footer__links-container {
-    flex-direction: row;
-  }
-
-  .footer__links {
-    justify-content: end;
-  }
-}
 </style>

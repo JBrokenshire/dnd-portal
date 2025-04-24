@@ -1,9 +1,13 @@
 import VueRouter from "vue-router"
 
-import auth from "@/router/routes/auth"
 import {isUserLoggedIn} from "@/auth/utils"
 import {canNavigate} from "@/libs/acl/routeProtection"
-import character from "@/router/routes/character";
+
+// Routes
+import auth from "@/router/routes/auth"
+import race from "@/router/routes/race"
+import classRoutes from "@/router/routes/class"
+import character from "@/router/routes/character"
 
 const router = new VueRouter({
   mode: "history",
@@ -15,7 +19,25 @@ const router = new VueRouter({
       component: () => import("@/views/home/Home.vue"),
     },
     ...auth,
-    ...character
+    ...character,
+    ...classRoutes,
+    ...race,
+    {
+      path: '/error-404',
+      name: 'error-404',
+      component: () => import('@/views/error/Error404.vue'),
+      meta: {
+        layout: 'full',
+        resource: 'Auth',
+        action: 'Read',
+      },
+    },
+    {
+      path: '*',
+      redirect: 'error-404',
+      resource: 'Auth',
+      action: 'Read',
+    },
   ],
 })
 

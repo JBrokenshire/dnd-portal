@@ -2,7 +2,7 @@
   <div class="page">
     <page-header />
 
-    <div class="content padding-x">
+    <div class="content padding-x pt-8">
       <slot />
     </div>
 
@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #f1f1f1;
 }
 
 .content {

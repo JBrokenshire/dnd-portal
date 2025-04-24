@@ -1,38 +1,66 @@
 <template>
   <div
-    class="w-full padding-x py-2 flex-between"
+    class="w-full px-16 py-2 flex-between"
     style="z-index: 10;"
   >
-    <div class="d-flex align-items-baseline">
+    <div class="flex items-center gap-4 text-lg">
       <router-link
         :to="{name: 'home'}"
-        class="d-none d-sm-block mr-4"
+        class="hidden sm:block mr-4"
       >
-        <b-img
+        <img
           :src="websiteLogo"
-          class="logo"
-        />
+          alt="Website Logo"
+          class="w-[100px] aspect-square"
+        >
       </router-link>
-      <h5>Welcome {{ currentUser && currentUser.username }}</h5>
+      <router-link
+        :class="`nav-link px-4 ${activeLink === 'home' && 'active'}`"
+        :to="{name: 'home'}"
+      >
+        <h5>Home</h5>
+      </router-link>
+      <router-link
+        :class="`nav-link px-4 ${activeLink === 'characters' && 'active'}`"
+        :to="{name: 'characters'}"
+      >
+        <h5>Characters</h5>
+      </router-link>
+      <router-link
+        :class="`nav-link px-4 ${activeLink === 'races' && 'active'}`"
+        :to="{name: 'races'}"
+      >
+        <h5>Races</h5>
+      </router-link>
+      <router-link
+        :class="`nav-link px-4 ${activeLink === 'classes' && 'active'}`"
+        :to="{name: 'classes'}"
+      >
+        <h5>Classes</h5>
+      </router-link>
     </div>
 
-    <b-button
-      class="d-flex align-items-center text-center shadow"
-      variant="danger"
-      @click="logout"
-    >
-      <span class="mr-2">Logout</span>
-      <feather-icon icon="LogOutIcon" />
-    </b-button>
+    <div class="w-fit">
+      <c-button
+        class="d-flex align-items-center text-center shadow"
+        variant="danger"
+        @click="logout"
+      >
+        <span class="mr-2">Logout</span>
+        <feather-icon icon="LogOutIcon" />
+      </c-button>
+    </div>
   </div>
 </template>
 
 <script>
   import auth from "@/auth/auth";
   import HelperService from "@/services/HelperService";
+  import CButton from "@/components/ui/CustomButton.vue";
 
   export default {
     name: "PageHeader",
+    components: {CButton},
     data() {
       return {
         websiteLogo: require('@/assets/images/website-logo.png'),
@@ -41,6 +69,9 @@
     computed: {
       currentUser() {
         return auth.getCurrentUser();
+      },
+      activeLink() {
+        return this.$route.name
       }
     },
     methods: {
@@ -55,5 +86,4 @@
 </script>
 
 <style scoped>
-
 </style>

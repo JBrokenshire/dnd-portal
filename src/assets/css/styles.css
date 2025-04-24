@@ -1,82 +1,89 @@
-@reference "tailwindcss";
+@import "tailwindcss";
+
+/* START: Colours */
+@theme {
+    --color-primary: #8b5cf6;
+    --color-primary-light: #c4b5fd;
+    --color-primary-dark: #6d28d9;
+    --color-link: #006eff;
+    --color-link-dark: #0a00b8;
+    --color-danger: #c10000;
+    --color-danger-light: #cd3737;
+    --color-danger-dark: #920000;
+    --color-success: #54b23b;
+    --color-success-light: #8cda79;
+    --color-success-dark: #3b7f2a;
+    --color-gray: #828282;
+    --color-gray-light: #a6a6a6;
+    --color-gray-dark: #595959;
+}
+/* END: Colours */
 
 *, *::before, *::after {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
     font-family: "IM Fell English", serif !important;
 }
 
-:root {
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
-    --breakpoint-2xl: 1400px;
-}
-
 /* START: General Styles */
-.padding-x {
-    padding-inline: 2rem;
+.flex-between {
+    @apply flex justify-between items-center
 }
-
-@media (min-width: var(--breakpoint-md)) {
-    .padding-x {
-        padding-inline: 4rem;
-    }
-}
-
 
 .flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @apply flex justify-center items-center
 }
 
-.flex-between {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+.padding-x {
+    @apply sm:px-16 px-6;
 }
 
-.cursor-pointer {
-    cursor: pointer;
+.grid-3 {
+    @apply grid gap-2 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 lg:gap-8;
 }
 
-a, a:hover {
-    text-decoration: none;
+/*  END: General Styles */
+
+/* START: Link Styles */
+.link {
+    @apply transition-all text-link hover:text-link-dark
 }
 
-/* END: General Styles */
-
-/* START: Image Styles */
-.background-image {
-    position: absolute;
-    z-index: -10;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.nav-link {
+    @apply relative w-fit transition-all py-2 rounded-lg hover:text-primary
 }
 
-.background-image img {
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: contain;
+.nav-link::before {
+    @apply content-[''] absolute transition-all bg-primary bottom-0 left-1/2 w-0 h-[2px]
 }
 
-.logo {
-    width: 100px;
-    aspect-ratio: 1/1;
+.nav-link:hover::before {
+    @apply w-full left-0
 }
 
-/* END:  Image Styles */
+.nav-link.active {
+    @apply text-primary;
+}
+
+.nav-link.active::before {
+    @apply w-full left-0
+}
+
+/* END: Link Styles */
+
+/* START: Button Styles */
+.btn {
+    @apply transition-all w-full flex justify-center items-center px-4 py-2 text-white font-medium rounded-md shadow-sm cursor-pointer focus:outline-none disabled:opacity-50 disabled:cursor-default
+}
+
+/* END: Button Styles */
 
 /* START: Form Styles */
 label {
-    margin: 0 !important;
-    padding: 0 !important;
+    display: block;
+}
+
+input {
+    width: 100%;
 }
 
 /* END: Form Styles */

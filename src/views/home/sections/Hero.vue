@@ -9,21 +9,23 @@
         Whether it's a horde of goblins, a nest of vampires or a mighty red dragon - Your party are ready for anything
       </p>
 
-      <b-button
-        variant="primary"
-        @click="viewCharacters"
-      >
-        View Characters
-      </b-button>
+      <div class="w-fit">
+        <c-button
+          class="mt-4 text-lg"
+          variant="primary"
+          @click="viewCharacters"
+        >
+          View Characters
+        </c-button>
+      </div>
     </div>
     <div class="hero__image-container">
       <div class="hero__image">
-        <b-img
+        <img
           :src="heroImage"
           alt="hero"
-          class-name="object-contain"
-          fill
-        />
+          class="object-contain"
+        >
         <div class="hero__image-overlay" />
       </div>
 
@@ -32,8 +34,11 @@
 </template>
 
 <script>
+  import CButton from "@/components/ui/CustomButton.vue";
+
   export default {
     name: "Hero",
+    components: {CButton},
     data() {
       return {
         heroImage: require("@/assets/images/pages/home/hero.png")

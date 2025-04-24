@@ -1,173 +1,186 @@
 <template>
-  <div class="position-relative flex-center">
-    <div class="background-image">
-      <b-img :src="backgroundImage" />
-    </div>
-
-    <b-card
-      class="col-3 shadow-lg flex-grow-1 mx-4"
-      style="max-width:420px; min-width: 280px;"
-      title="Sign Up"
+  <div class="min-h-screen flex items-center justify-center bg-gray-100 relative">
+    <img
+      :src="backgroundImage"
+      alt="Sign up background"
+      class="absolute inset-0 object-cover w-full h-full z-0"
     >
-      <validation-observer
-        ref="observer"
-        v-slot="{ handleSubmit, invalid }"
-      >
-        <b-form @submit.stop.prevent="handleSubmit(signUp)">
-          <!-- Username -->
-          <section class="mb-2">
-            <label>Username</label>
-            <validation-provider
-              v-slot="validationContext"
-              :rules="{ required: true }"
-              name="Username"
-            >
-              <b-form-input
-                v-model="username"
-                :state="getValidationState(validationContext)"
-                placeholder="Enter username..."
-              />
 
-              <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </validation-provider>
-          </section>
+    <div class="relative z-10 max-w-md w-full px-6">
+      <card>
+        <h2 class="text-2xl font-semibold mb-4 text-center">Sign Up</h2>
 
-          <!-- Password -->
-          <section class="mb-2">
-            <label>Password</label>
-            <validation-provider
-              v-slot="validationContext"
-              :rules="{ required: true }"
-              name="Password"
-            >
-              <section class="d-flex align-items-center">
-                <b-form-input
-                  v-model="password"
-                  :state="getValidationState(validationContext)"
-                  :type="passwordFieldType"
-                  class="mr-2"
-                  placeholder="●●●●●●●●"
-                />
-                <feather-icon
-                  :icon="passwordToggleIcon"
-                  class="cursor-pointer"
-                  size="24"
-                  @click="togglePasswordVisibility"
-                />
-              </section>
-
-              <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </validation-provider>
-          </section>
-
-          <!-- Confirm Password -->
-          <section class="mb-2">
-            <label>Confirm Password</label>
-            <validation-provider
-              v-slot="validationContext"
-              :rules="{ required: true }"
-              name="Confirm Password"
-            >
-              <section class="d-flex align-items-center">
-                <b-form-input
-                  v-model="confirmPassword"
-                  :state="getValidationState(validationContext)"
-                  :type="passwordFieldType"
-                  class="mr-2"
-                  placeholder="●●●●●●●●"
-                />
-              </section>
-
-              <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-              <small
-                v-if="password !== confirmPassword"
-                class="text-danger"
+        <validation-observer
+          ref="observer"
+          v-slot="{ handleSubmit, invalid }"
+        >
+          <form @submit.prevent="handleSubmit(signUp)">
+            <!-- Username -->
+            <div class="mb-4">
+              <label class="block mb-1 font-medium">Username</label>
+              <validation-provider
+                v-slot="validationContext"
+                :rules="{ required: true }"
+                name="Username"
               >
-                Passwords do not match.
-              </small>
-            </validation-provider>
-          </section>
+                <div>
+                  <text-input
+                    v-model="username"
+                    :class="{ 'border-danger-light': validationContext.errors.length }"
+                    placeholder="Enter username..."
+                  />
+                  <p
+                    v-if="validationContext.errors[0]"
+                    class="text-danger-light text-sm mt-1"
+                  >
+                    {{ validationContext.errors[0] }}
+                  </p>
+                </div>
+              </validation-provider>
+            </div>
 
-          <section class="my-4">
-            <b-btn
-              :disabled="invalid || loading"
-              class="w-100"
-              type="submit"
-              variant="primary"
-            >
-              Sign Up
-            </b-btn>
-          </section>
-        </b-form>
-      </validation-observer>
+            <!-- Password -->
+            <div class="mb-4">
+              <label class="block mb-1 font-medium">Password</label>
+              <validation-provider
+                v-slot="validationContext"
+                :rules="{ required: true }"
+                name="Password"
+              >
+                <div class="flex items-center">
+                  <text-input
+                    v-model="password"
+                    :class="{ 'border-danger-light': validationContext.errors.length }"
+                    :type="passwordFieldType"
+                    class="mr-2 flex-grow"
+                    placeholder="●●●●●●●●"
+                  />
+                  <feather-icon
+                    :icon="passwordToggleIcon"
+                    class="cursor-pointer"
+                    size="24"
+                    @click="togglePasswordVisibility"
+                  />
+                </div>
+                <p
+                  v-if="validationContext.errors[0]"
+                  class="text-danger-light text-sm mt-1"
+                >
+                  {{ validationContext.errors[0] }}
+                </p>
+              </validation-provider>
+            </div>
 
-      <!-- Sign up -->
-      <section
-        class="mb-2 full-width text-center"
-      >
-        Already have an account?
-        <router-link :to="{name: 'auth-login'}">Login</router-link>
-      </section>
-    </b-card>
+            <!-- Confirm Password -->
+            <div class="mb-4">
+              <label class="block mb-1 font-medium">Confirm Password</label>
+              <validation-provider
+                v-slot="validationContext"
+                :rules="{ required: true }"
+                name="Confirm Password"
+              >
+                <div>
+                  <text-input
+                    v-model="confirmPassword"
+                    :class="{ 'border-danger-light': validationContext.errors.length || (password !== confirmPassword) }"
+                    :type="passwordFieldType"
+                    placeholder="●●●●●●●●"
+                  />
+                  <p
+                    v-if="validationContext.errors[0]"
+                    class="text-danger-light text-sm mt-1"
+                  >
+                    {{ validationContext.errors[0] }}
+                  </p>
+                  <p
+                    v-if="password !== confirmPassword"
+                    class="text-danger-light text-sm mt-1"
+                  >
+                    Passwords do not match.
+                  </p>
+                </div>
+              </validation-provider>
+            </div>
+
+            <!-- Submit -->
+            <div class="mt-6">
+              <c-button
+                :disabled="invalid || loading || password !== confirmPassword"
+                type="submit"
+                variant="primary"
+              >
+                Sign Up
+              </c-button>
+            </div>
+          </form>
+        </validation-observer>
+
+        <div class="text-center mt-4 text-sm">
+          Already have an account?
+          <router-link
+            :to="{ name: 'auth-login' }"
+            class="link"
+          >
+            Login
+          </router-link>
+        </div>
+      </card>
+    </div>
   </div>
-
 </template>
 
 <script>
-  import {togglePasswordVisibility} from "@core/mixins/ui/forms"
+  import auth from "@/auth/auth";
+  import Card from "@/components/ui/Card.vue";
   import UserService from "@/services/UserService";
   import HelperService from "@/services/HelperService";
-  import auth from "@/auth/auth";
+  import CButton from "@/components/ui/CustomButton.vue";
+  import TextInput from "@/components/ui/input/TextInput.vue";
+  import {togglePasswordVisibility} from "@core/mixins/ui/forms";
 
   export default {
     name: "SignUp",
+    components: {CButton, Card, TextInput},
     mixins: [togglePasswordVisibility],
     data() {
       return {
         username: "",
         password: "",
         confirmPassword: "",
-        status: "",
         loading: false,
         backgroundImage: require('@/assets/images/pages/login.jpg'),
-      }
+      };
     },
     computed: {
       passwordToggleIcon() {
-        return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+        return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon';
       },
     },
     methods: {
-      getValidationState({dirty, validated, valid = null}) {
-        return dirty || validated ? valid : null;
-      },
       async signUp() {
-        this.loading = true
+        if (this.password !== this.confirmPassword) return;
+
+        this.loading = true;
         try {
           const createUserDTO = {
             username: this.username,
             password: this.password,
-            confirm_password: this.confirmPassword
-          }
+            confirm_password: this.confirmPassword,
+          };
 
-          await UserService.create(createUserDTO)
+          await UserService.create(createUserDTO);
 
           const loginDTO = {
             username: this.username,
             password: this.password,
-          }
-          const res = await auth.login(loginDTO)
-          auth.setToken(res.data.access_token)
-          await auth.refreshCurrentUser()
+          };
 
-          HelperService.successToast(this.$toast, `Welcome ${auth.getCurrentUser().username}!`)
-          await this.$router.push({name: 'home'})
+          const res = await auth.login(loginDTO);
+          auth.setToken(res.data.access_token);
+          await auth.refreshCurrentUser();
+
+          HelperService.successToast(this.$toast, `Welcome ${auth.getCurrentUser().username}!`);
+          await this.$router.push({name: 'home'});
         } catch (err) {
           const res = err.response;
           let errorText = "Could not create user, please refresh and try again";
@@ -176,17 +189,11 @@
             errorText = res.data.error;
           }
 
-          HelperService.errorToast(this.$toast, err, errorText)
+          HelperService.errorToast(this.$toast, err, errorText);
         } finally {
-          this.loading = false
+          this.loading = false;
         }
       },
-      forgotPassword() {
-        this.$router.push({name: 'auth-forgot-password'})
-      },
     },
-  }
+  };
 </script>
-
-<style>
-</style>

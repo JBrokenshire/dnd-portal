@@ -1,107 +1,117 @@
 <template>
-  <div class="position-relative min-vh-100 flex-center">
-    <div class="background-image">
-      <b-img :src="backgroundImage" />
-    </div>
-
-    <b-card
-      class="col-3 shadow-lg flex-grow-1 mx-4"
-      style="max-width:420px; min-width: 280px;"
-      title="Login"
+  <div class="min-h-screen flex items-center justify-center bg-gray-100 relative">
+    <img
+      :src="backgroundImage"
+      alt="Login background"
+      class="absolute inset-0 object-cover w-full h-full z-0"
     >
-      <validation-observer
-        ref="observer"
-        v-slot="{ handleSubmit, invalid }"
-      >
-        <b-form @submit.stop.prevent="handleSubmit(login)">
-          <!-- Username -->
-          <section class="mb-2">
-            <label>Username</label>
-            <validation-provider
-              v-slot="validationContext"
-              :rules="{ required: true }"
-              name="Username"
-            >
-              <b-form-input
-                v-model="username"
-                :state="getValidationState(validationContext)"
-                placeholder="Enter username..."
-              />
 
-              <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </validation-provider>
-          </section>
+    <div class="relative z-10 max-w-md w-full px-6">
+      <card>
+        <h2 class="text-2xl font-semibold mb-4 text-center">Login</h2>
 
-          <!-- Password -->
-          <section class="mb-2">
-            <label>Password</label>
-            <validation-provider
-              v-slot="validationContext"
-              :rules="{ required: true }"
-              name="Password"
-            >
-              <section class="d-flex align-items-center">
-                <b-form-input
-                  v-model="password"
-                  :state="getValidationState(validationContext)"
-                  :type="passwordFieldType"
-                  class="mr-2"
-                  placeholder="●●●●●●●●"
+        <validation-observer
+          ref="observer"
+          v-slot="{ handleSubmit, invalid }"
+        >
+          <form @submit.prevent="handleSubmit(login)">
+            <!-- Username -->
+            <div class="mb-4">
+              <label class="">Username</label>
+              <validation-provider
+                v-slot="validationContext"
+                :rules="{ required: true }"
+                name="Username"
+              >
+                <text-input
+                  v-model="username"
+                  :invalid="validationContext.errors.length > 0"
+                  placeholder="Enter username..."
                 />
-                <feather-icon
-                  :icon="passwordToggleIcon"
-                  class="cursor-pointer"
-                  size="24"
-                  @click="togglePasswordVisibility"
-                />
-              </section>
+                <p
+                  v-if="validationContext.errors[0]"
+                  class="text-danger-light text-sm mt-1"
+                >
+                  {{ validationContext.errors[0] }}
+                </p>
+              </validation-provider>
+            </div>
 
-              <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </validation-provider>
-          </section>
+            <!-- Password -->
+            <div class="mb-4">
+              <label class="block mb-1 font-medium">Password</label>
+              <validation-provider
+                v-slot="validationContext"
+                :rules="{ required: true }"
+                name="Password"
+              >
+                <div class="flex items-center">
+                  <text-input
+                    v-model="password"
+                    :class="{ 'border-danger-light': validationContext.errors.length }"
+                    :type="passwordFieldType"
+                    class="mr-2 flex-grow"
+                    placeholder="●●●●●●●●"
+                  />
+                  <feather-icon
+                    :icon="passwordToggleIcon"
+                    class="cursor-pointer"
+                    size="24"
+                    @click="togglePasswordVisibility"
+                  />
+                </div>
+                <p
+                  v-if="validationContext.errors[0]"
+                  class="text-danger-light text-sm mt-1"
+                >
+                  {{ validationContext.errors[0] }}
+                </p>
+              </validation-provider>
+            </div>
 
-          <section class="my-4">
-            <b-btn
-              :disabled="invalid || loading"
-              class="w-100"
-              type="submit"
-              variant="primary"
-            >
-              Login
-            </b-btn>
-          </section>
-        </b-form>
-      </validation-observer>
+            <!-- Submit -->
+            <div class="mt-6">
+              <c-button
+                :disabled="invalid || loading"
+                type="submit"
+                variant="primary"
+              >
+                Login
+              </c-button>
+            </div>
+          </form>
+        </validation-observer>
 
-      <!-- Sign up -->
-      <section
-        class="mb-2 full-width text-center"
-      >
-        Don't have an account?<br>
-        <router-link :to="{name: 'auth-sign-up'}">Sign Up</router-link>
-      </section>
-    </b-card>
+        <div class="text-center mt-4 text-sm">
+          Don’t have an account?
+          <router-link
+            :to="{ name: 'auth-sign-up' }"
+            class="link"
+          >
+            Sign Up
+          </router-link>
+        </div>
+      </card>
+    </div>
   </div>
-
 </template>
 
 <script>
-  import auth from "@/auth/auth";
-  import HelperService from "@/services/HelperService";
+  import auth from "@/auth/auth"
+  import Card from "@/components/ui/Card.vue";
+  import HelperService from "@/services/HelperService"
+  import CButton from "@/components/ui/CustomButton.vue";
+  import TextInput from "@/components/ui/input/TextInput.vue";
   import {togglePasswordVisibility} from "@core/mixins/ui/forms"
 
   export default {
     name: "Login",
+    components: {CButton, TextInput, Card},
     mixins: [togglePasswordVisibility],
     data() {
       return {
-        password: "",
         username: "",
-        status: "",
+        password: "",
         loading: false,
         backgroundImage: require('@/assets/images/pages/login.jpg'),
       }
@@ -112,9 +122,6 @@
       },
     },
     methods: {
-      getValidationState({dirty, validated, valid = null}) {
-        return dirty || validated ? valid : null;
-      },
       async login() {
         this.loading = true
         try {
@@ -138,6 +145,3 @@
     },
   }
 </script>
-
-<style>
-</style>

@@ -12,13 +12,11 @@ import {extend, localize} from 'vee-validate';
 import * as rules from 'vee-validate/dist/rules';
 import en from 'vee-validate/dist/locale/en.json';
 
+// Import Styles
+import "@/assets/css/styles.css"
+
 // Import global components
 import "@/global-components.js"
-
-// Install Styles
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import '@/assets/css/styles.css'
 
 // Install VeeValidate rules
 Object.keys(rules).forEach(rule => {
