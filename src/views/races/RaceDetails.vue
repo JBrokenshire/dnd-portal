@@ -1,17 +1,17 @@
 <template>
   <div>
     <router-link
-      :to="{name: 'classes'}"
+      :to="{name: 'races'}"
       class="flex items-center gap-2 text-lg mb-4 nav-link"
     >
       <feather-icon
         icon="ChevronLeftIcon"
         size="32"
       />
-      Back to Classes
+      Back to Races
     </router-link>
 
-    <div v-if="classType">
+    <div v-if="race">
       <div class="flex flex-col lg:flex-row-reverse gap-4">
         <div class="flex-grow sm:min-w-1/2 lg:min-w-1/4">
           <card
@@ -35,63 +35,62 @@
           </card>
         </div>
         <card
-          :title="`${classType.name} Details`"
+          :title="`${race.name} Details`"
           class="mb-4 flex-grow"
         >
           <div class="flex-between gap-4">
-            <div class="flex-grow self-start">
-              <div class="mb-4 description">{{ classType.short_description }}</div>
+            <div class="self-start">
+              <div class="mb-4 description">{{ race.short_description }}</div>
               <div class="text-sm sm:text-lg">
                 <div class="flex gap-4">
-                  <div class="font-bold flex-grow md:max-w-1/3 lg:max-w-1/4">Hit Die:</div>
-                  <div>D{{ classType.hit_point_die_value }}</div>
+                  <div class="font-bold flex-grow md:max-w-1/3 lg:max-w-1/4">Creature Type:</div>
+                  <div>{{ race.creature_type }}</div>
                 </div>
                 <div class="flex gap-4">
-                  <div class="font-bold flex-grow md:max-w-1/3 lg:max-w-1/4">Saves:</div>
-                  <div>{{ classType.saves.join(" & ") }}</div>
+                  <div class="font-bold flex-grow md:max-w-1/3 lg:max-w-1/4">Size:</div>
+                  <div>{{ race.size }}</div>
                 </div>
                 <div class="flex gap-4">
-                  <div class="font-bold flex-grow md:max-w-1/3 lg:max-w-1/4">Primary Ability:</div>
-                  <div>{{ classType.primary_ability }}</div>
+                  <div class="font-bold flex-grow md:max-w-1/3 lg:max-w-1/4">Base Speed:</div>
+                  <div>{{ race.base_speed }} ft.</div>
                 </div>
               </div>
             </div>
             <img
-              :alt="`${classType.name} Logo`"
+              :alt="`${race.name} Logo`"
               :src="logoURL"
               class="hidden md:block w-full max-w-[100px] lg:max-w-[150px] xl:max-w-[200px] rounded-lg aspect-square object-cover"
             >
           </div>
         </card>
-
       </div>
     </div>
 
     <modal
-      id="modal-update-class"
+      id="modal-update-race"
       :visible="showUpdateModal"
       size="md"
-      title="Update Class"
+      title="Update Race"
       @close="closeModals"
     >
-      <edit-class-modal
-        :existing="classType"
+      <edit-race-modal
+        :existing="race"
         @close="closeModals"
-        @update="updateClass"
+        @update="updateRace"
       />
     </modal>
 
     <modal
-      id="modal-delete-class"
+      id="modal-delete-race"
       :show-close="false"
       :visible="showDeleteModal"
       size="sm"
-      title="Delete Class"
+      title="Delete Race"
     >
       <delete-modal
-        type="class"
+        type="race"
         @close="closeModals"
-        @delete="deleteClass"
+        @delete="deleteRace"
       />
     </modal>
   </div>
@@ -101,18 +100,18 @@
 <script>
   import Card from "@/components/ui/Card.vue";
   import Modal from "@/components/ui/Modal.vue";
-  import ClassService from "@/services/ClassService";
+  import RaceService from "@/services/RaceService";
   import HelperService from "@/services/HelperService";
   import CButton from "@/components/ui/CustomButton.vue";
   import DeleteModal from "@/components/modals/DeleteModal.vue";
-  import EditClassModal from "@/views/classes/sections/EditClassModal.vue";
+  import EditRaceModal from "@/views/races/sections/EditRaceModal.vue";
 
   export default {
-    name: "ClassDetails",
-    components: {EditClassModal, DeleteModal, Modal, CButton, Card},
+    name: "RaceDetails",
+    components: {EditRaceModal, DeleteModal, Modal, CButton, Card},
     data() {
       return {
-        classType: null,
+        race: null,
         loading: false,
         showUpdateModal: false,
         showDeleteModal: false,
@@ -120,28 +119,28 @@
     },
     computed: {
       logoURL() {
-        if (this.classType.logo) {
+        if (this.race.logo) {
           return `${HelperService.getApiUrl()}/files/${
-            this.classType.logo.file_location
-          }/${this.classType.logo.filename}`;
+            this.race.logo.file_location
+          }/${this.race.logo.filename}`;
         }
 
         return "";
       }
     },
     mounted() {
-      this.getClass()
+      this.getRace()
     },
     methods: {
-      async getClass() {
+      async getRace() {
         this.loading = true;
         try {
-          const res = await ClassService.get(this.$route.params.id);
-          this.classType = res.data;
-          this.classType.saves = JSON.parse(this.classType.saves);
+          const res = await RaceService.get(this.$route.params.id);
+          this.race = res.data;
+          console.log(this.race.short_description);
         } catch (err) {
           const res = err.response;
-          let errorText = "Could not get class, please refresh and try again";
+          let errorText = "Could not get race, please refresh and try again";
 
           if (res && res.data.error) {
             errorText = res.data.error;
@@ -152,26 +151,25 @@
           this.loading = false;
         }
       },
-      async updateClass(updatedClass) {
+      async updateRace(updatedRace) {
         this.loading = true;
         try {
           const dto = {
-            name: updatedClass.name,
-            saves: JSON.stringify(updatedClass.saves),
-            short_description: updatedClass.short_description,
-            primary_ability: updatedClass.primary_ability,
-            hit_point_die_value: updatedClass.hit_point_die_value,
+            name: updatedRace.name,
+            creature_type: updatedRace.creature_type,
+            size: updatedRace.size,
+            base_speed: updatedRace.base_speed,
+            short_description: updatedRace.short_description,
           }
 
-          const res = await ClassService.update(this.classType.id, dto)
-          this.classType = res.data;
-          this.classType.saves = JSON.parse(this.classType.saves);
+          const res = await RaceService.update(this.race.id, dto)
+          this.race = res.data;
 
-          HelperService.successToast(this.$toast, "Class updated successfully")
+          HelperService.successToast(this.$toast, "Race updated successfully")
           this.closeModals()
         } catch (err) {
           const res = err.response;
-          let errorText = "Could not update class, please refresh and try again";
+          let errorText = "Could not update race, please refresh and try again";
 
           if (res && res.data.error) {
             errorText = res.data.error;
@@ -182,16 +180,16 @@
           this.loading = false;
         }
       },
-      async deleteClass() {
+      async deleteRace() {
         this.loading = true;
         try {
-          await ClassService.delete(this.classType.id);
+          await RaceService.delete(this.race.id);
 
-          HelperService.successToast(this.$toast, "Class deleted successfully")
-          await this.$router.push({name: "classes"})
+          HelperService.successToast(this.$toast, "Race deleted successfully")
+          await this.$router.push({name: "races"})
         } catch (err) {
           const res = err.response;
-          let errorText = "Could not delete class, please refresh and try again";
+          let errorText = "Could not delete race, please refresh and try again";
 
           if (res && res.data.error) {
             errorText = res.data.error;

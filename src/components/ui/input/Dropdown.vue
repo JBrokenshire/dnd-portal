@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block w-full">
+  <div class="relative inline-block w-full max-h-[36px]">
     <div
       class="cursor-pointer border border-gray-light rounded-md px-3 py-2 flex justify-between items-center shadow-sm transition-all"
       @click="toggle"

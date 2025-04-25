@@ -41,6 +41,10 @@
     @apply grid gap-2 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 lg:gap-8;
 }
 
+.description {
+    @apply whitespace-pre-wrap
+}
+
 /*  END: General Styles */
 
 /* START: Link Styles */
@@ -85,6 +89,26 @@ label {
 input,
 textarea {
     @apply w-full
+}
+
+input {
+    @apply max-h-[36px]
+}
+
+/* Hide number input spinners in all browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+
+.step-button {
+    @apply border border-gray-light rounded-md enabled:hover:bg-gray-light w-1/4 aspect-square transition-all cursor-pointer max-h-[36px] disabled:text-gray
 }
 
 /* END: Form Styles */
