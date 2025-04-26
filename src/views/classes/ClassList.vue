@@ -89,18 +89,6 @@
     components: {Pagination, CButton, TextInput, Modal, Card, ClassCard, CreateClassModal},
     data() {
       return {
-        headers: [
-          {
-            key: "name",
-            label: "Name",
-            class: "col-6",
-          },
-          {
-            key: "actions",
-            label: "",
-            class: "text-right col-1",
-          },
-        ],
         loading: false,
         classes: [],
         currentPage: 1,

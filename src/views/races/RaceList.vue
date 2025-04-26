@@ -89,18 +89,6 @@
     components: {CreateRaceModal, RaceCard, Pagination, CButton, TextInput, Modal, Card},
     data() {
       return {
-        headers: [
-          {
-            key: "name",
-            label: "Name",
-            class: "col-6",
-          },
-          {
-            key: "actions",
-            label: "",
-            class: "text-right col-1",
-          },
-        ],
         loading: false,
         races: [],
         currentPage: 1,

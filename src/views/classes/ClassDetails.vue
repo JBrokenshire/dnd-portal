@@ -95,7 +95,6 @@
       />
     </modal>
   </div>
-
 </template>
 
 <script>
