@@ -13,7 +13,7 @@
 
     <div v-if="race">
       <div class="flex flex-col lg:flex-row-reverse gap-4">
-        <div class="flex-grow sm:min-w-1/2 lg:min-w-1/4">
+        <div class="flex-grow sm:max-w-1/2 lg:max-w-1/4">
           <card
             class="flex flex-col gap-4"
             title="Actions"

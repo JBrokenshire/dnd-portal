@@ -13,7 +13,7 @@
 
     <div v-if="classType">
       <div class="flex flex-col lg:flex-row-reverse gap-4">
-        <div class="flex-grow sm:min-w-1/2 lg:min-w-1/4">
+        <div class="flex-grow lg:w-1/4">
           <card
             class="flex flex-col gap-4"
             title="Actions"
@@ -36,7 +36,7 @@
         </div>
         <card
           :title="`${classType.name} Details`"
-          class="mb-4 flex-grow"
+          class="mb-4 flex-grow lg:w-3/4"
         >
           <div class="flex-between gap-4">
             <div class="flex-grow self-start">
@@ -63,8 +63,55 @@
             >
           </div>
         </card>
-
       </div>
+
+      <card
+        class="mb-4"
+        title="Subclasses"
+      >
+        <div class="flex flex-col md:flex-row justify-between md:items-end gap-2">
+          <div class="flex-grow md:max-w-1/2 xl:max-w-1/3">
+            <label>Search</label>
+            <text-input
+              v-model="filters.search"
+              placeholder="Search by name"
+              @input="getMoreSubclasses"
+            />
+          </div>
+
+          <div class="flex gap-2">
+            <div class="w-fit">
+              <c-button @click="clearFilters">Clear Filters</c-button>
+            </div>
+            <div class="w-fit">
+              <c-button
+                variant="primary"
+                @click="showCreateSubclassModal = true"
+              >
+                Create Subclass
+              </c-button>
+            </div>
+          </div>
+        </div>
+      </card>
+
+      <div v-if="totalCount > 0">
+        <div class="grid-3 mb-8">
+          <subclass-card
+            v-for="subclass in subclasses"
+            :key="subclass.id"
+            :subclass="subclass"
+          />
+        </div>
+      </div>
+
+      <card
+        v-else
+        class="mb-4"
+        title="No Records"
+      >
+        No Subclasses match your current filters.
+      </card>
     </div>
 
     <modal
@@ -94,6 +141,19 @@
         @delete="deleteClass"
       />
     </modal>
+
+    <modal
+      id="modal-create-subclass"
+      :visible="showCreateSubclassModal"
+      size="md"
+      title="Create Subclass"
+      @close="closeModals"
+    >
+      <create-subclass-modal
+        :class-type="classType"
+        @close="closeModals"
+      />
+    </modal>
   </div>
 </template>
 
@@ -103,18 +163,31 @@
   import ClassService from "@/services/ClassService";
   import HelperService from "@/services/HelperService";
   import CButton from "@/components/ui/CustomButton.vue";
+  import SubclassService from "@/services/SubclassService";
+  import TextInput from "@/components/ui/input/TextInput.vue";
   import DeleteModal from "@/components/modals/DeleteModal.vue";
+  import SubclassCard from "@/views/subclasses/sections/SubclassCard.vue";
   import EditClassModal from "@/views/classes/sections/EditClassModal.vue";
+  import CreateSubclassModal from "@/views/subclasses/sections/CreateSubclassModal.vue";
 
   export default {
     name: "ClassDetails",
-    components: {EditClassModal, DeleteModal, Modal, CButton, Card},
+    components: {CreateSubclassModal, TextInput, SubclassCard, EditClassModal, DeleteModal, Modal, CButton, Card},
     data() {
       return {
         classType: null,
         loading: false,
         showUpdateModal: false,
         showDeleteModal: false,
+        showCreateSubclassModal: false,
+        subclasses: [],
+        filters: {
+          search: "",
+          page: 0,
+          page_size: 12,
+        },
+        currentPage: 1,
+        totalCount: 0,
       }
     },
     computed: {
@@ -130,8 +203,34 @@
     },
     mounted() {
       this.getClass()
+      this.getSubclasses()
     },
     methods: {
+      getMoreSubclasses(page) {
+        this.currentPage = page;
+        this.filters.page = page - 1
+        this.getSubclasses()
+      },
+      async getSubclasses() {
+        this.loading = true;
+        try {
+          const res = await SubclassService.list(this.$route.params.id, this.filters);
+          this.subclasses = res.data.data;
+          this.currentPage = res.data.meta.page;
+          this.totalCount = res.data.meta.total_count;
+        } catch (err) {
+          const res = err.response;
+          let errorText = "Could not get subclasses, please refresh and try again";
+
+          if (res && res.data.error) {
+            errorText = res.data.error;
+          }
+
+          HelperService.errorToast(this.$toast, err, errorText)
+        } finally {
+          this.loading = false;
+        }
+      },
       async getClass() {
         this.loading = true;
         try {
@@ -151,9 +250,13 @@
           this.loading = false;
         }
       },
-      async updateClass(updatedClass) {
+      async updateClass(updatedClass, image) {
         this.loading = true;
         try {
+          if (image) {
+            await ClassService.uploadLogo(this.classType.id, image)
+          }
+
           const dto = {
             name: updatedClass.name,
             saves: JSON.stringify(updatedClass.saves),
@@ -204,7 +307,16 @@
       closeModals() {
         this.showUpdateModal = false;
         this.showDeleteModal = false;
+        this.showCreateSubclassModal = false;
       },
+      clearFilters() {
+        this.filters = {
+          search: "",
+          page: 0,
+          page_size: 12,
+        }
+        this.getMoreSubclasses(1);
+      }
     }
   }
 </script>

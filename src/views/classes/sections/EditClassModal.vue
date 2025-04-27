@@ -90,6 +90,22 @@
         </validation-provider>
       </section>
 
+      <section class="mb-4">
+        <label>Logo (Optional)</label>
+        <validation-provider
+          v-slot="validationContext"
+          :rules="{ isImageFile }"
+          name="Image"
+        >
+          <file-input
+            v-model="image"
+            :invalid="!!validationContext.errors[0]"
+            placeholder="Browse files"
+          />
+          <small class="text-danger">{{ validationContext.errors[0] }}</small>
+        </validation-provider>
+      </section>
+
       <div class="float-right flex gap-2 mt-2">
         <c-button
           class="mr-2"
@@ -115,10 +131,11 @@
   import TextInput from "@/components/ui/input/TextInput.vue";
   import {isImageFile} from "@core/utils/validations/validations";
   import MultiselectDropdown from "@/components/ui/input/MultiselectDropdown.vue";
+  import FileInput from "@/components/ui/input/FileInput.vue";
 
   export default {
     name: "EditClassModal",
-    components: {MultiselectDropdown, Dropdown, CButton, TextInput},
+    components: {FileInput, MultiselectDropdown, Dropdown, CButton, TextInput},
     props: {
       existing: {
         type: Object,
@@ -136,7 +153,6 @@
           hit_point_die_value: null,
         },
         image: null,
-        imageChanged: false,
         hitPointDieOptions: [
           {label: "D4", value: 4},
           {label: "D6", value: 6},
@@ -168,7 +184,7 @@
     },
     methods: {
       updateClass() {
-        this.$emit('update', this.updatedClass);
+        this.$emit('update', this.updatedClass, this.image);
       }
     }
   }

@@ -7,6 +7,7 @@ import {canNavigate} from "@/libs/acl/routeProtection"
 import auth from "@/router/routes/auth"
 import race from "@/router/routes/race"
 import classRoutes from "@/router/routes/class"
+import subclass from "@/router/routes/subclass"
 import character from "@/router/routes/character"
 
 const router = new VueRouter({
@@ -21,6 +22,7 @@ const router = new VueRouter({
     ...auth,
     ...character,
     ...classRoutes,
+    ...subclass,
     ...race,
     {
       path: '/error-404',

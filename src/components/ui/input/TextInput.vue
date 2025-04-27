@@ -3,6 +3,7 @@
     v-if="rows === 1"
     :id="id"
     :class="invalid ? 'border-danger-light focus:ring-danger-light focus:border-danger-light' : 'border-gray-light focus:ring-primary focus:border-primary'"
+    :disabled="disabled"
     :placeholder="placeholder"
     :type="type"
     :value="value"
@@ -13,6 +14,7 @@
     v-else
     :id="id"
     :class="invalid ? 'border-danger-light focus:ring-danger-light focus:border-danger-light' : 'border-gray-light focus:ring-primary focus:border-primary'"
+    :disabled="disabled"
     :placeholder="placeholder"
     :rows="rows"
     :value="value"
@@ -46,6 +48,10 @@
         default: 1,
       },
       invalid: {
+        type: Boolean,
+        default: false,
+      },
+      disabled: {
         type: Boolean,
         default: false,
       }
