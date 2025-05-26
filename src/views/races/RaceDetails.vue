@@ -137,7 +137,6 @@
         try {
           const res = await RaceService.get(this.$route.params.id);
           this.race = res.data;
-          console.log(this.race.short_description);
         } catch (err) {
           const res = err.response;
           let errorText = "Could not get race, please refresh and try again";

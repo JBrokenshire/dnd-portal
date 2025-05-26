@@ -1,6 +1,7 @@
 <template>
   <div class="flex-center gap-2 w-full">
     <button
+      v-if="showButtons"
       :disabled="value <= min"
       class="step-button"
       type="button"
@@ -19,6 +20,7 @@
       @input="onInput($event.target.value)"
     >
     <button
+      v-if="showButtons"
       :disabled="value >= max"
       class="step-button"
       type="button"
@@ -52,6 +54,10 @@
       invalid: {
         type: Boolean,
         default: false
+      },
+      showButtons: {
+        type: Boolean,
+        default: true
       }
     },
     methods: {

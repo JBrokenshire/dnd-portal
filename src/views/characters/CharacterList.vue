@@ -9,11 +9,10 @@
           This page shows all characters.
         </div>
         <div class="w-fit">
-          <c-button
-            variant="primary"
-            @click="showCreateCharacterModal = true"
-          >
-            Create Character
+          <c-button variant="primary">
+            <router-link :to="{name: 'character-builder'}">
+              Create Character
+            </router-link>
           </c-button>
         </div>
       </div>
@@ -58,33 +57,21 @@
     >
       No Characters match your current filters.
     </card>
-
-    <modal
-      id="modal-create-character"
-      :visible="showCreateCharacterModal"
-      size="md"
-      title="Create Character"
-      @close="closeModals"
-    >
-      <create-character-modal @close="closeModals" />
-    </modal>
   </div>
 </template>
 
 <script>
   import Card from "@/components/ui/Card.vue";
-  import Modal from "@/components/ui/Modal.vue";
   import HelperService from "@/services/HelperService";
   import CButton from "@/components/ui/CustomButton.vue";
   import Pagination from "@/components/ui/Pagination.vue";
   import CharacterService from "@/services/CharacterService";
   import TextInput from "@/components/ui/input/TextInput.vue";
   import CharacterCard from "@/views/characters/sections/CharacterCard.vue";
-  import CreateCharacterModal from "@/views/characters/sections/CreateCharacterModal.vue";
 
   export default {
     name: "CharacterList",
-    components: {CreateCharacterModal, Modal, CharacterCard, Pagination, TextInput, CButton, Card},
+    components: {CharacterCard, Pagination, TextInput, CButton, Card},
     data() {
       return {
         loading: false,

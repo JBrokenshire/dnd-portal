@@ -5,9 +5,15 @@
     >
       <div class="flex gap-4 items-center">
         <img
+          v-if="profilePictureURL"
           :alt="`${character.name} Profile Picture`"
-          :src="logoURL"
+          :src="profilePictureURL"
           class="w-[50px] lg:w-[100px] aspect-square rounded-xl object-contain"
+        >
+        <img
+          v-else
+          alt="Default Profile Picture"
+          src="@/assets/images/pages/characters/default-character-profile.png"
         >
 
         <div class="flex flex-col">
@@ -34,12 +40,12 @@
     },
     data() {
       return {
-        logoURL: "",
+        profilePictureURL: "",
       }
     },
     mounted() {
-      if (this.$props.character.profile_picture) {
-        this.logoURL = `${HelperService.getApiUrl()}/files/${
+      if (this.$props.character.profile_picture.id !== 0) {
+        this.profilePictureURL = `${HelperService.getApiUrl()}/files/${
           this.$props.character.profile_picture.file_location
         }/${this.$props.character.profile_picture.filename}`;
       }
