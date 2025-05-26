@@ -27,6 +27,16 @@ export default {
       }
     })
   },
+  uploadBackgroundImage(id, file) {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return axios.post(`${baseUrl}/${id}/upload/background-image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    })
+  },
   delete(id) {
     return axios.delete(`${baseUrl}/${id}`)
   }

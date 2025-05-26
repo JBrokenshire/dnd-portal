@@ -250,11 +250,15 @@
           this.loading = false;
         }
       },
-      async updateClass(updatedClass, image) {
+      async updateClass(updatedClass, logo, backgroundImage) {
         this.loading = true;
         try {
-          if (image) {
-            await ClassService.uploadLogo(this.classType.id, image)
+          if (logo) {
+            await ClassService.uploadLogo(this.classType.id, logo)
+          }
+
+          if (backgroundImage) {
+            await ClassService.uploadBackgroundImage(this.classType.id, backgroundImage)
           }
 
           const dto = {

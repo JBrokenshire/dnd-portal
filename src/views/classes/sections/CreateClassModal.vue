@@ -95,10 +95,26 @@
         <validation-provider
           v-slot="validationContext"
           :rules="{ isImageFile }"
-          name="Image"
+          name="Logo"
         >
           <file-input
-            v-model="image"
+            v-model="logo"
+            :invalid="!!validationContext.errors[0]"
+            placeholder="Browse files"
+          />
+          <small class="text-danger">{{ validationContext.errors[0] }}</small>
+        </validation-provider>
+      </section>
+
+      <section class="mb-4">
+        <label>Background Image (Optional)</label>
+        <validation-provider
+          v-slot="validationContext"
+          :rules="{ isImageFile }"
+          name="Background Image"
+        >
+          <file-input
+            v-model="backgroundImage"
             :invalid="!!validationContext.errors[0]"
             placeholder="Browse files"
           />
@@ -148,7 +164,8 @@
           primary_ability: "",
           hit_point_die_value: null,
         },
-        image: null,
+        logo: null,
+        backgroundImage: null,
         hitPointDieOptions: [
           {label: "D4", value: 4},
           {label: "D6", value: 6},
@@ -185,8 +202,12 @@
 
           const res = await ClassService.create(dto)
 
-          if (this.image) {
-            await ClassService.uploadLogo(res.data.id, this.image)
+          if (this.logo) {
+            await ClassService.uploadLogo(res.data.id, this.logo)
+          }
+
+          if (this.backgroundImage) {
+            await ClassService.uploadBackgroundImage(res.data.id, this.backgroundImage)
           }
 
           HelperService.successToast(this.$toast, "Class created successfully")
