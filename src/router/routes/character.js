@@ -8,6 +8,9 @@ export default [
     path: "/characters/:id/sheet",
     name: "character-details",
     component: () => import("@/views/characters/CharacterDetails.vue"),
+    meta: {
+      layout: "full",
+    },
   },
   {
     path: "/characters/builder",

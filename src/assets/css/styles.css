@@ -15,14 +15,16 @@
     --color-success-light: #8cda79;
     --color-success-dark: #3b7f2a;
     --color-gray: #828282;
-    --color-gray-light: #a6a6a6;
+    --color-gray-light: #a2acb2;
     --color-gray-dark: #595959;
+    --color-character-sheet-header: #2b2b2a;
+    --color-fighter: #972e2e;
 }
 /* END: Colours */
 
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: "IM Fell English", serif !important;
+    font-family: "IM Fell English", serif;
 }
 
 /* START: General Styles */
