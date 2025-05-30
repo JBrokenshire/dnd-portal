@@ -5,17 +5,23 @@
     <proficiency-bonus :level="character.level" />
 
     <walking-speed :value="character.race.base_speed" />
+
+    <inspiration
+      :character="character"
+      @update="(v) => $emit('update', v)"
+    />
   </div>
 </template>
 
 <script>
   import Abilities from "@/views/characters/sections/sheet/quick-info/Abilities.vue";
+  import Inspiration from "@/views/characters/sections/sheet/quick-info/Inspiration.vue";
   import WalkingSpeed from "@/views/characters/sections/sheet/quick-info/WalkingSpeed.vue";
   import ProficiencyBonus from "@/views/characters/sections/sheet/quick-info/ProficiencyBonus.vue";
 
   export default {
     name: "CharacterQuickInfo",
-    components: {WalkingSpeed, ProficiencyBonus, Abilities},
+    components: {Inspiration, WalkingSpeed, ProficiencyBonus, Abilities},
     props: {
       character: {
         type: Object,

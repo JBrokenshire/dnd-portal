@@ -30,4 +30,7 @@ export default {
       }
     })
   },
+  toggleInspiration(id) {
+    return axios.post(`${baseUrl}/${id}/inspiration`)
+  }
 }

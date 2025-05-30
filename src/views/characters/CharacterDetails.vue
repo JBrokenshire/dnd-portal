@@ -13,7 +13,10 @@
       >
 
       <div class="mx-auto max-w-[1200px]">
-        <character-quick-info :character="character" />
+        <character-quick-info
+          :character="character"
+          @update="updateCharacter"
+        />
       </div>
     </div>
   </div>
@@ -54,7 +57,6 @@
         try {
           const res = await CharacterService.get(this.$route.params.id)
           this.character = res.data
-          console.log(this.character)
         } catch (err) {
           const res = err.response;
           let errorText = "Could not get character, please refresh and try again";
@@ -67,6 +69,9 @@
         } finally {
           this.loading = false;
         }
+      },
+      updateCharacter(newCharacter) {
+        this.character = newCharacter;
       }
     }
   }
