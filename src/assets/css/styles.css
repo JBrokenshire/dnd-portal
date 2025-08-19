@@ -19,6 +19,7 @@
     --color-gray-dark: #595959;
     --color-character-sheet-header: #2b2b2a;
     --color-fighter: #972e2e;
+    --color-fighter-faded: #972e2e40;
 }
 /* END: Colours */
 
@@ -46,6 +47,10 @@
 
 .description {
     @apply whitespace-pre-wrap
+}
+
+.transition-200 {
+    @apply transition-all duration-200 ease-in-out;
 }
 
 /*  END: General Styles */
@@ -79,7 +84,7 @@
 
 /* START: Button Styles */
 .btn {
-    @apply transition-all w-full flex justify-center items-center px-4 py-2 text-white font-medium rounded-md shadow-sm cursor-pointer focus:outline-none disabled:opacity-50 disabled:cursor-default
+    @apply transition-all duration-200 w-full flex justify-center items-center px-4 py-2 text-white font-medium rounded-md shadow-sm cursor-pointer focus:outline-none disabled:opacity-50 disabled:cursor-default
 }
 
 /* END: Button Styles */

@@ -52,8 +52,7 @@
         </div>
 
         <div
-          v-if="$props.character.inspiration"
-          class="h-[1.25rem] w-[2.1875rem] relative"
+          :class="`h-[1.25rem] w-[2.1875rem] relative transition-200 ${$props.character.inspiration ? 'scale-100' : 'scale-0'}`"
         >
           <svg
             viewBox="0 0 50 30"

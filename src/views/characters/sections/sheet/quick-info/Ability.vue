@@ -24,7 +24,9 @@
     <div class="relative h-full">
       <span class="text-gray-light text-[10px] font-bold uppercase">{{ $props.title }}</span>
       <div class="text-[26px] relative flex-center">
-        <div class="h-[34px] w-[60px] relative border border-fighter rounded flex-center">
+        <div
+          class="h-[34px] w-[60px] relative border border-fighter rounded flex-center transition-200 hover:bg-fighter-faded"
+        >
           <div class="flex items-center relative">
             <div class="text-gray-light">{{ score >= 10 ? '+' : '-' }}</div>
             <div class="text-white">{{ Math.abs(modifier) }}</div>

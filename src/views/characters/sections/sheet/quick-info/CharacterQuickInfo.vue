@@ -10,6 +10,11 @@
       :character="character"
       @update="(v) => $emit('update', v)"
     />
+
+    <hit-points
+      :character="character"
+      @update="(v) => $emit('update', v)"
+    />
   </div>
 </template>
 
@@ -18,10 +23,11 @@
   import Inspiration from "@/views/characters/sections/sheet/quick-info/Inspiration.vue";
   import WalkingSpeed from "@/views/characters/sections/sheet/quick-info/WalkingSpeed.vue";
   import ProficiencyBonus from "@/views/characters/sections/sheet/quick-info/ProficiencyBonus.vue";
+  import HitPoints from "@/views/characters/sections/sheet/quick-info/HitPoints.vue";
 
   export default {
     name: "CharacterQuickInfo",
-    components: {Inspiration, WalkingSpeed, ProficiencyBonus, Abilities},
+    components: {HitPoints, Inspiration, WalkingSpeed, ProficiencyBonus, Abilities},
     props: {
       character: {
         type: Object,
