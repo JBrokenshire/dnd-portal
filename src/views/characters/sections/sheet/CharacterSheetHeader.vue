@@ -3,10 +3,16 @@
     <div class="mx-auto max-w-[1200px]">
       <router-link
         :to="{name: 'characters'}"
-        class="nav-link text-white flex-between gap-4 mb-2 text-sm"
       >
-        <feather-icon icon="ChevronLeftIcon" />
-        Back to Characters
+        <c-button
+          class="max-w-fit flex gap-1 mb-2 text-sm"
+        >
+          <feather-icon
+            class="mb-[.125rem]"
+            icon="ChevronLeftIcon"
+          />
+          Back to Characters
+        </c-button>
       </router-link>
       <div class="flex items-center gap-4">
         <img
@@ -28,9 +34,11 @@
 
 <script>
   import HelperService from "@/services/HelperService";
+  import CButton from "@/components/ui/CustomButton.vue";
 
   export default {
     name: 'CharacterSheetHeader',
+    components: {CButton},
     props: {
       character: {
         type: Object,

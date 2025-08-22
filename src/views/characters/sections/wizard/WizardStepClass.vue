@@ -1,9 +1,25 @@
 <template>
   <div>
     <card v-if="$attrs.class_id !== 0 && selectedClass !== null">
-      <div class="py-4 mb-4 border-y border-gray-light">
-        <div class="font-bold text-2xl">Character Level: {{ $attrs.level }}</div>
-        <div>{{ $attrs.advancement_type }} Advancement</div>
+      <div class="py-4 mb-4 border-y border-gray-light flex-between">
+        <div>
+          <div class="font-bold text-2xl">Character Level: {{ $attrs.level }}</div>
+          <div>{{ $attrs.advancement_type }} Advancement</div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="min-w-fit">
+            <div class="">Max Hit Points: {{ $attrs.level * selectedClass.hit_point_die_value }}</div>
+            <div>
+              Hit Die: 1d{{ selectedClass.hit_point_die_value }}
+            </div>
+          </div>
+          <c-button
+            class="text-xs max-w-[8rem]"
+            variant="primary"
+          >
+            Manage HP
+          </c-button>
+        </div>
       </div>
       <div class="flex-between">
         <div class="flex items-center gap-4">

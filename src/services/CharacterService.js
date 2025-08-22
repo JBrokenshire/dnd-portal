@@ -30,10 +30,4 @@ export default {
       }
     })
   },
-  toggleInspiration(id) {
-    return axios.post(`${baseUrl}/${id}/inspiration`)
-  },
-  updateHealth(id, dto) {
-    return axios.put(`${baseUrl}/${id}/health`, dto)
-  }
 }

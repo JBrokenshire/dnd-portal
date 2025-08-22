@@ -91,8 +91,8 @@
 </template>
 
 <script>
-  import CharacterService from "@/services/CharacterService";
   import HelperService from "@/services/HelperService";
+  import CharacterHealthService from "@/services/CharacterHealthService";
 
   export default {
     name: "HitPoints",
@@ -115,7 +115,7 @@
           const dto = {
             current_hit_points: newHitPoints,
           }
-          const res = await CharacterService.updateHealth(this.$props.character.id, dto)
+          const res = await CharacterHealthService.update(this.$props.character.id, dto)
           this.$emit('update', res.data)
           this.healthValue = ""
         } catch (err) {

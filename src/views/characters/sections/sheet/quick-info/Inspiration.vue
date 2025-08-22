@@ -99,7 +99,7 @@
 
 <script>
   import HelperService from "@/services/HelperService";
-  import CharacterService from "@/services/CharacterService";
+  import CharacterInspirationService from "@/services/CharacterInspirationService";
 
   export default {
     name: 'Inspiration',
@@ -119,7 +119,7 @@
         this.loading = true
 
         try {
-          const res = await CharacterService.toggleInspiration(this.character.id)
+          const res = await CharacterInspirationService.update(this.character.id)
           this.$emit('update', res.data)
         } catch (err) {
           const res = err.response;
