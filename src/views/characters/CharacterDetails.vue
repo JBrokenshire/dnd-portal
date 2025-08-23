@@ -17,6 +17,10 @@
           :character="character"
           @update="updateCharacter"
         />
+
+        <character-subsections
+          :character="character"
+        />
       </div>
     </div>
   </div>
@@ -27,10 +31,11 @@
   import CharacterService from "@/services/CharacterService";
   import CharacterSheetHeader from "@/views/characters/sections/sheet/CharacterSheetHeader.vue";
   import CharacterQuickInfo from "@/views/characters/sections/sheet/quick-info/CharacterQuickInfo.vue";
+  import CharacterSubsections from "@/views/characters/sections/sheet/subsections/CharacterSubsections.vue";
 
   export default {
     name: "CharacterDetails",
-    components: {CharacterQuickInfo, CharacterSheetHeader},
+    components: {CharacterSubsections, CharacterQuickInfo, CharacterSheetHeader},
     data() {
       return {
         character: null,

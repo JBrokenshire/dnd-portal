@@ -41,6 +41,8 @@
 </template>
 
 <script>
+  import {modifierFromLevel} from "@/utils/characterSheet";
+
   export default {
     name: 'Ability',
     props: {
@@ -55,7 +57,7 @@
     },
     computed: {
       modifier() {
-        return Math.floor((this.$props.score - 10) / 2)
+        return modifierFromLevel(this.$props.score)
       }
     }
   }

@@ -133,3 +133,12 @@ input[type="number"] {
 }
 
 /* END: Animations */
+
+/* START: Character Sheet Styles */
+.subsection-footer {
+    @apply absolute flex justify-center left-0 right-0 bottom-[5px] text-[13px] uppercase font-bold;
+}
+
+.subsection-footer span {
+    @apply cursor-pointer inline-flex relative text-white
+}
