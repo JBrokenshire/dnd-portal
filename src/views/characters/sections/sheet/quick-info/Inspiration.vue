@@ -1,10 +1,12 @@
 <template>
-  <div class="cursor-pointer h-[3.3125rem] w-[4.5rem] relative text-center flex-center">
+  <div
+    class="cursor-pointer h-[3.3125rem] w-[4.5rem] relative text-center flex-center"
+    @click="toggleInspiration"
+  >
     <h2 class="sr-only">Inspiration</h2>
     <div>
       <div
         class="h-[3.3125rem] w-[4.5rem] relative flex-center transform-all"
-        @click="toggleInspiration"
       >
         <div class="absolute overflow-hidden top-0 left-0 bottom-0 right-0">
           <svg
