@@ -36,9 +36,9 @@
           class="text-[12px] h-[3.6em] leading-[1.2] mt-[6px] overflow-hidden text-white flex-center flex-col flex-wrap"
         >
           <span
-            v-for="(sense, index) in $props.character.senses"
+            v-for="(sense, index) in JSON.parse($props.character.senses)"
             :key="`sense-${index}`"
-          >{{ sense.sense }}</span>
+          >{{ sense }}</span>
         </div>
       </div>
     </section>
@@ -74,7 +74,7 @@
       insight() {
         return 10 + modifierFromLevel(this.$props.character.wisdom)
       }
-    }
+    },
   }
 </script>
 
