@@ -7,6 +7,8 @@
     <proficiency-groups :character="$props.character" />
 
     <skills :character="$props.character" />
+
+    <combat :character="$props.character" />
   </div>
 </template>
 
@@ -16,10 +18,11 @@
   import Senses from "@/views/characters/sections/sheet/subsections/Senses.vue";
   import ProficiencyGroups from "@/views/characters/sections/sheet/subsections/ProficiencyGroups.vue";
   import Skills from "@/views/characters/sections/sheet/subsections/Skills.vue";
+  import Combat from "@/views/characters/sections/sheet/subsections/combat/Combat.vue";
 
   export default {
     name: "CharacterSubsections",
-    components: {Skills, ProficiencyGroups, Senses, SavingThrows},
+    components: {Combat, Skills, ProficiencyGroups, Senses, SavingThrows},
     props: {
       character: {
         type: Object,

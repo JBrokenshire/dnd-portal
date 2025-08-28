@@ -21,7 +21,7 @@
       <h2 class="sr-only">Walking Speed</h2>
       <div class="font-bold uppercase text-gray-light text-[12px] pt-[8px] pb-[1px]">Walking</div>
       <div class="text-[26px] flex items-baseline justify-center gap-1">
-        <div class="text-white font-bold">{{ $props.value }}</div>
+        <div class="text-white">{{ $props.value }}</div>
         <div class="text-gray-light text-sm">ft.</div>
       </div>
       <div class="font-bold uppercase text-gray-light text-[12px] pt-[1px] pb-[8px]">Speed</div>

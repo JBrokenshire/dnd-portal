@@ -22,7 +22,7 @@
       <div class="font-bold uppercase text-gray-light text-[12px] pt-[8px] pb-[1px]">Proficiency</div>
       <div class="text-[26px] flex-center">
         <div class="text-gray-light">+</div>
-        <div class="text-white font-bold">{{ proficiencyBonusFromLevel($props.level) }}</div>
+        <div class="text-white">{{ proficiencyBonusFromLevel($props.level) }}</div>
       </div>
       <div class="font-bold uppercase text-gray-light text-[12px] pt-[1px] pb-[8px]">Bonus</div>
     </div>
