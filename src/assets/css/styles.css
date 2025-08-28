@@ -142,3 +142,11 @@ input[type="number"] {
 .subsection-footer span {
     @apply cursor-pointer inline-flex relative text-white
 }
+
+.character-sheet-section-bg {
+    @apply absolute top-0 left-0 right-0 bottom-0 overflow-hidden;
+}
+
+.character-sheet-section-bg svg {
+    @apply w-full h-full;
+}

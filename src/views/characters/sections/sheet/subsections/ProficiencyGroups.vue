@@ -1,7 +1,7 @@
 <template>
   <div class="absolute left-0 top-[427px]">
     <section class="relative w-[278px] h-[338px] py-[13px] px-[20px]">
-      <div class="absolute top-0 right-0 bottom-0 left-0 overflow-hidden">
+      <div class="character-sheet-section-bg">
         <svg viewBox="0 0 278 338">
           <polygon
             fill="#10161ADB"

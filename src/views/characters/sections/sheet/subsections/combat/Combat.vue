@@ -5,6 +5,8 @@
         <initiative :character="$props.character" />
 
         <armour-class :character="$props.character" />
+
+        <defenses-and-conditions :character="$props.character" />
       </div>
     </div>
   </div>
@@ -14,10 +16,11 @@
 
   import Initiative from "@/views/characters/sections/sheet/subsections/combat/Initiative.vue";
   import ArmourClass from "@/views/characters/sections/sheet/subsections/combat/ArmourClass.vue";
+  import DefensesAndConditions from "@/views/characters/sections/sheet/subsections/combat/DefensesAndConditions.vue";
 
   export default {
     name: "Combat",
-    components: {ArmourClass, Initiative},
+    components: {DefensesAndConditions, ArmourClass, Initiative},
     props: {
       character: {
         type: Object,

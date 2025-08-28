@@ -7,7 +7,7 @@
       <div
         class="relative flex-center text-center font-bold uppercase w-[5.625rem] h-[3.4375rem] text-[1.625rem] tracking-[-.0625rem]"
       >
-        <div class="absolute top-0 right-0 bottom-0 left-0">
+        <div class="character-sheet-section-bg">
           <svg viewBox="0 0 70 45">
             <polygon
               fill="#10161ADB"

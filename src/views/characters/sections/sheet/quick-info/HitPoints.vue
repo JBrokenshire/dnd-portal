@@ -1,10 +1,8 @@
 <template>
   <div class="h-[5.563rem] w-[19.813rem] text-center relative cursor-pointer">
     <!-- Background Image -->
-    <div class="absolute overflow-hidden top-0 left-0 bottom-0 right-0">
-      <svg
-        viewBox="0 0 317 88.98"
-      >
+    <div class="character-sheet-section-bg">
+      <svg viewBox="0 0 317 88.98">
         <path
           d="M9.35,8,7,10.29a38.78,38.78,0,0,1,.35,6.19l.85,57c0,4.29.29,6.67,3.67,9.37l3.76,2.46c2.56,2,19.53,1.87,9.58,1.87l271.48-.68c3.29,0,5.19-2.23,7.75-4.28l3-2.64c3.38-2.7,1.7-2.4,1.7-6.69L310,17.06c0-4.28-.76-8-4.13-10.71h0a18.9,18.9,0,0,0-10.39-3.64L19.59,2.48A36.38,36.38,0,0,0,9.35,8Z"
           fill="#10161ADB"
