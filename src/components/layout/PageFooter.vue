@@ -40,8 +40,8 @@
       <p>@2025 D&D Dashboard. All rights reserved</p>
 
       <div class="flex flex-1 justify-center sm:justify-end mt-4 gap-5">
-        <router-link :to="{name: 'privacy-policy'}">Privacy Policy</router-link>
-        <router-link :to="{name: 'terms-and-conditions'}">Terms & Conditions</router-link>
+        <router-link :to="{name: 'home'}">Privacy Policy</router-link>
+        <router-link :to="{name: 'home'}">Terms & Conditions</router-link>
       </div>
     </div>
   </footer>
