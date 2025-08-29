@@ -52,7 +52,7 @@
 <script>
 
   import SenseCallout from "@/views/characters/sections/sheet/subsections/SenseCallout.vue";
-  import {modifierFromLevel} from "@/utils/characterSheet";
+  import {modifierFromLevel, proficiencyBonusFromLevel} from "@/utils/characterSheet";
 
   export default {
     name: "Senses",
@@ -64,17 +64,34 @@
       }
     },
     computed: {
-      // TODO: Update these properties when skill proficiency is added
+      proficiencyBonus() {
+        return proficiencyBonusFromLevel(this.$props.character.level);
+      },
       perception() {
-        return 10 + modifierFromLevel(this.$props.character.wisdom)
+        return 10 + modifierFromLevel(this.$props.character.wisdom) + this.getProficiencyBonus('Perception')
       },
       investigation() {
-        return 10 + modifierFromLevel(this.$props.character.intelligence)
+        return 10 + modifierFromLevel(this.$props.character.intelligence) + this.getProficiencyBonus('Investigation')
       },
       insight() {
-        return 10 + modifierFromLevel(this.$props.character.wisdom)
+        return 10 + modifierFromLevel(this.$props.character.wisdom) + this.getProficiencyBonus('Insight')
       }
     },
+    methods: {
+      getProficiencyBonus(skill) {
+        let proficiencyType = this.$props.character.proficient_skills.get(skill)
+
+        switch (proficiencyType) {
+        case 'Proficiency':
+          return this.proficiencyBonus
+        case 'Half Proficiency':
+          return Math.floor(this.proficiencyBonus / 2)
+        case 'Expertise':
+          return this.proficiencyBonus * 2
+        }
+        return 0
+      }
+    }
   }
 </script>
 

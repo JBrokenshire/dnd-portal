@@ -44,8 +44,8 @@
             v-for="skill in characterSheetSkills.keys()"
             :key="`skill-${skill}`"
             :ability-abbreviation="characterSheetSkills.get(skill)"
-            :character="character"
-            :proficiency-type="proficientSkills.get(skill)"
+            :character="$props.character"
+            :proficiency-type="$props.character.proficient_skills.get(skill)"
             :skill="skill"
           />
         </div>
@@ -76,13 +76,6 @@
       characterSheetSkills() {
         return CharacterSheetSkills
       },
-      proficientSkills() {
-        const map = new Map()
-        for (const profSkill of this.$props.character.proficient_skills) {
-          map.set(profSkill.skill, profSkill.proficiency_type)
-        }
-        return map
-      }
     },
   }
 </script>

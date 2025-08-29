@@ -111,8 +111,8 @@
         class="h-[24px] w-[40px] text-[20px] text-white border border-fighter inline-flex items-center justify-center rounded-[4px] bg-transparent transition-200 hover:bg-fighter-faded  cursor-pointer"
       >
         <span class="inline-flex items-center">
-          <span class="text-gray-light text-[.75rem] mr-[.063rem]">+</span>
-          <span>2</span>
+          <span class="text-gray-light text-[.75rem] mr-[.063rem]">{{ modifier >= 0 ? '+' : '-' }}</span>
+          <span>{{ Math.abs(modifier) }}</span>
         </span>
       </button>
     </div>
@@ -121,6 +121,7 @@
 
 <script>
   import Tooltip from "@/components/ui/Tooltip.vue";
+  import {modifierFromLevel, proficiencyBonusFromLevel} from "@/utils/characterSheet";
 
   export default {
     name: "SkillCallout",
@@ -143,6 +144,43 @@
         default: "",
       }
     },
+    computed: {
+      modifier() {
+        let mod = 0
+        switch (this.$props.abilityAbbreviation) {
+        case 'STR':
+          mod = modifierFromLevel(this.$props.character.strength)
+          break;
+        case 'DEX':
+          mod = modifierFromLevel(this.$props.character.dexterity)
+          break;
+        case 'INT':
+          mod = modifierFromLevel(this.$props.character.intelligence)
+          break;
+        case 'WIS':
+          mod = modifierFromLevel(this.$props.character.wisdom)
+          break;
+        case 'CHA':
+          mod = modifierFromLevel(this.$props.character.charisma)
+          break;
+        }
+
+        let bonus = proficiencyBonusFromLevel(this.$props.character.level)
+        switch (this.$props.proficiencyType) {
+        case 'Proficiency':
+          mod += bonus
+          break;
+        case 'Half Proficiency':
+          mod += Math.floor(bonus / 2)
+          break;
+        case 'Expertise':
+          mod += bonus * 2
+          break;
+        }
+
+        return mod
+      }
+    }
   }
 </script>
 

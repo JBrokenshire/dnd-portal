@@ -62,6 +62,12 @@
         try {
           const res = await CharacterService.get(this.$route.params.id)
           this.character = res.data
+
+          const map = new Map()
+          for (const profSkill of this.character.proficient_skills) {
+            map.set(profSkill.skill, profSkill.proficiency_type)
+          }
+          this.character.proficient_skills = map
         } catch (err) {
           const res = err.response;
           let errorText = "Could not get character, please refresh and try again";
