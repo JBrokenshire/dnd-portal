@@ -9,6 +9,8 @@
     <skills :character="$props.character" />
 
     <combat :character="$props.character" />
+
+    <primary :character="$props.character" />
   </div>
 </template>
 
@@ -19,10 +21,11 @@
   import ProficiencyGroups from "@/views/characters/sections/sheet/subsections/ProficiencyGroups.vue";
   import Skills from "@/views/characters/sections/sheet/subsections/Skills.vue";
   import Combat from "@/views/characters/sections/sheet/subsections/combat/Combat.vue";
+  import Primary from "@/views/characters/sections/sheet/subsections/primary/Primary.vue";
 
   export default {
     name: "CharacterSubsections",
-    components: {Combat, Skills, ProficiencyGroups, Senses, SavingThrows},
+    components: {Primary, Combat, Skills, ProficiencyGroups, Senses, SavingThrows},
     props: {
       character: {
         type: Object,

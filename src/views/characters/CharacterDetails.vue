@@ -84,7 +84,7 @@
 
 <style>
 .character-sheet-body * {
-  font-family: "Roboto Condensed", sans-serif !important;
+  font-family: "Roboto Condensed,Roboto,Helvetica", sans-serif !important;
   letter-spacing: -0.04rem;
 }
 </style>
