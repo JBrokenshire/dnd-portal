@@ -14,7 +14,7 @@
         </svg>
       </div>
 
-      <div class="flex flex-col h-100 relative z-[4]">
+      <div class="flex flex-col h-full relative z-[4]">
         <menu class="mb-[1rem] flex gap-[1rem] list-none p-0 font-bold text-gray-light">
           <li>
             <button
@@ -26,7 +26,7 @@
             </button>
           </li>
 
-          <li>
+          <li v-if="$props.character.class.spellcasting_ability">
             <button
               :class="`${selectedTab === 'Spells' && 'active'}`"
               class="primary-menu-button"
@@ -124,7 +124,7 @@
 
 <script>
   import Actions from "@/views/characters/sections/sheet/subsections/primary/Actions.vue";
-  import Spells from "@/views/characters/sections/sheet/subsections/primary/Spells.vue";
+  import Spells from "@/views/characters/sections/sheet/subsections/primary/spells/Spells.vue";
   import Inventory from "@/views/characters/sections/sheet/subsections/primary/Inventory.vue";
   import FeaturesAndTraits from "@/views/characters/sections/sheet/subsections/primary/FeaturesAndTraits.vue";
   import Background from "@/views/characters/sections/sheet/subsections/primary/background/Background.vue";
