@@ -4,6 +4,18 @@
       <div class="text-fighter text-[13px] font-bold grow shrink basis-0 min-w-0 uppercase">
         {{ $props.title }}
       </div>
+
+      <div v-if="$props.spellSlots > 0">
+        <div class="flex items-center w-full">
+          <div class="flex flex-wrap">
+            <spell-slot-indicator
+              v-for="spellSlot in $props.spellSlots"
+              :key="`${$props.title}-spell-slot-indicator-${spellSlot}`"
+            />
+          </div>
+          <div class="text-white font-extrabold uppercase ml-[5px] text-[12px]">Slots</div>
+        </div>
+      </div>
     </div>
 
     <div>
@@ -32,10 +44,11 @@
 
 <script>
   import Spell from "@/views/characters/sections/sheet/subsections/primary/spells/Spell.vue";
+  import SpellSlotIndicator from "@/views/characters/sections/sheet/subsections/primary/spells/SpellSlotIndicator.vue";
 
   export default {
     name: "SpellLevel",
-    components: {Spell},
+    components: {SpellSlotIndicator, Spell},
     props: {
       title: {
         type: String,
@@ -52,8 +65,12 @@
       saveDc: {
         type: Number,
         required: true,
+      },
+      spellSlots: {
+        type: Number,
+        default: 0,
       }
-    }
+    },
   }
 </script>
 

@@ -57,10 +57,11 @@
         <div class="p-0 flex flex-col min-h-0 bg-transparent">
           <div class="overflow-y-auto">
             <spell-level
-              v-for="spellLevel in characterSpellsMap.entries()"
+              v-for="(spellLevel, index) in characterSpellsMap.entries()"
               :key="`spell-level-${spellLevel[0]}`"
               :attack-modifier="spellAttackModifier"
               :save-dc="spellSaveDC"
+              :spell-slots="spellSlotsMap.get(index)"
               :spells="spellLevel[1]"
               :title="spellLevel[0]"
             />
@@ -123,6 +124,16 @@
         for (const spell of this.$props.character.spells) {
           map.get(keys[spell.level]).push(spell)
         }
+
+        return map
+      },
+      spellSlotsMap() {
+        const map = new Map()
+
+        for (const spellSlotLevel of this.$props.character.class.spell_slots) {
+          map.set(spellSlotLevel.spell_level, spellSlotLevel.spell_slots)
+        }
+
         return map
       }
     },
