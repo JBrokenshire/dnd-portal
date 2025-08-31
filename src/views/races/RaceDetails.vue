@@ -150,9 +150,13 @@
           this.loading = false;
         }
       },
-      async updateRace(updatedRace) {
+      async updateRace(updatedRace, logo) {
         this.loading = true;
         try {
+          if (logo) {
+            await RaceService.uploadLogo(this.race.id, logo)
+          }
+
           const dto = {
             name: updatedRace.name,
             creature_type: updatedRace.creature_type,

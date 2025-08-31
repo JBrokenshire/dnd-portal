@@ -15,11 +15,17 @@
         </c-button>
       </router-link>
       <div class="flex items-center gap-4">
-        <img
-          :class="`w-[100px] aspect-square border-2 border-fighter rounded`"
-          :src="profilePictureURL"
-          alt="Profile Picture"
+        <tooltip
+          position="bottom"
+          text="Upload Profile Picture"
         >
+          <img
+            :src="profilePictureURL"
+            alt="Profile Picture"
+            class="w-[100px] aspect-square border-2 border-fighter rounded cursor-pointer transition-200 hover:brightness-[125%] hover:bg-gray"
+            @click="showUploadProfilePictureModal = true"
+          >
+        </tooltip>
         <div>
           <h1 class="text-2xl font-bold">{{ character.name }}</h1>
           <div class="text-sm text-gray-light">{{ character.pronouns && `${character.pronouns} | ` }}
@@ -29,20 +35,43 @@
         </div>
       </div>
     </div>
+
+    <modal
+      id="modal-upload-character-profile-picture"
+      :visible="showUploadProfilePictureModal"
+      class="text-black"
+      size="md"
+      title="Upload Profile Picture"
+      @close="closeModals"
+    >
+      <upload-profile-picture-modal
+        @close="closeModals"
+        @update="uploadProfilePicture"
+      />
+    </modal>
   </div>
 </template>
 
 <script>
   import HelperService from "@/services/HelperService";
   import CButton from "@/components/ui/CustomButton.vue";
+  import Tooltip from "@/components/ui/Tooltip.vue";
+  import Modal from "@/components/ui/Modal.vue";
+  import UploadProfilePictureModal from "@/views/characters/sections/UploadProfilePictureModal.vue";
 
   export default {
     name: 'CharacterSheetHeader',
-    components: {CButton},
+    components: {UploadProfilePictureModal, Modal, Tooltip, CButton},
     props: {
       character: {
         type: Object,
         required: true
+      }
+    },
+    data() {
+      return {
+        showUploadProfilePictureModal: false,
+        loading: false,
       }
     },
     computed: {
@@ -54,6 +83,15 @@
         }
 
         return "";
+      }
+    },
+    methods: {
+      async uploadProfilePicture(profilePicture) {
+        this.$emit('update', this.$props.character, profilePicture);
+        this.closeModals()
+      },
+      closeModals() {
+        this.showUploadProfilePictureModal = false;
       }
     }
   }

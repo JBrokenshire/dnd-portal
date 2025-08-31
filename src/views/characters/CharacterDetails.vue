@@ -3,7 +3,10 @@
     v-if="character"
     class="flex flex-col min-h-[100vh]"
   >
-    <character-sheet-header :character="character" />
+    <character-sheet-header
+      :character="character"
+      @update="updateCharacter"
+    />
     <div class="relative flex-grow character-sheet-body">
       <!-- Background Image -->
       <img
@@ -63,11 +66,7 @@
           const res = await CharacterService.get(this.$route.params.id)
           this.character = res.data
 
-          const map = new Map()
-          for (const profSkill of this.character.proficient_skills) {
-            map.set(profSkill.skill, profSkill.proficiency_type)
-          }
-          this.character.proficient_skills = map
+          this.convertCharacterProperties()
         } catch (err) {
           const res = err.response;
           let errorText = "Could not get character, please refresh and try again";
@@ -81,8 +80,56 @@
           this.loading = false;
         }
       },
-      updateCharacter(newCharacter) {
-        this.character = newCharacter;
+      async updateCharacter(updatedCharacter, profilePicture) {
+        this.loading = true;
+        try {
+          if (profilePicture) {
+            await CharacterService.uploadProfilePicture(this.character.id, profilePicture);
+          }
+
+          const dto = {
+            name: updatedCharacter.name,
+            class_id: updatedCharacter.class_id,
+            race_id: updatedCharacter.race_id,
+            pronouns: updatedCharacter.pronouns,
+            level: updatedCharacter.level,
+            strength: updatedCharacter.strength,
+            dexterity: updatedCharacter.dexterity,
+            constitution: updatedCharacter.constitution,
+            intelligence: updatedCharacter.intelligence,
+            wisdom: updatedCharacter.wisdom,
+            charisma: updatedCharacter.charisma,
+            advancement_type: updatedCharacter.advancement_type,
+            hit_point_type: updatedCharacter.hit_point_type,
+          }
+
+          await CharacterService.update(this.character.id, dto);
+          let res = await CharacterService.get(this.character.id);
+          this.character = res.data
+          
+          this.convertCharacterProperties()
+
+          HelperService.successToast(this.$toast, "Updated character")
+        } catch (err) {
+          const res = err.response;
+          let errorText = "Could not update character, please refresh and try again";
+
+          if (res && res.data.error) {
+            errorText = res.data.error;
+          }
+
+          HelperService.errorToast(this.$toast, err, errorText)
+        } finally {
+          this.loading = false;
+        }
+        this.convertCharacterProperties()
+      },
+      convertCharacterProperties() {
+        const map = new Map()
+        for (const profSkill of this.character.proficient_skills) {
+          map.set(profSkill.skill, profSkill.proficiency_type)
+        }
+        this.character.proficient_skills = map
       }
     }
   }

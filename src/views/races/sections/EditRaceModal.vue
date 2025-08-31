@@ -96,10 +96,10 @@
         <validation-provider
           v-slot="validationContext"
           :rules="{ isImageFile }"
-          name="Image"
+          name="Logo"
         >
           <file-input
-            v-model="image"
+            v-model="logo"
             :invalid="!!validationContext.errors[0]"
             placeholder="Browse files"
           />
@@ -152,8 +152,7 @@
           base_speed: 0,
           short_description: "",
         },
-        image: null,
-        imageChanged: false,
+        logo: null,
         sizeOptions: [
           {label: "Tiny", value: "Tiny"},
           {label: "Small", value: "Small"},
@@ -178,7 +177,7 @@
     },
     methods: {
       updateRace() {
-        this.$emit('update', this.updatedRace);
+        this.$emit('update', this.updatedRace, this.logo);
       }
     }
   }
