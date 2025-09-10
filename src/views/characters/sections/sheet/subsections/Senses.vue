@@ -36,7 +36,7 @@
           class="text-[12px] h-[3.6em] leading-[1.2] mt-[6px] overflow-hidden text-white flex-center flex-col flex-wrap"
         >
           <span
-            v-for="(sense, index) in JSON.parse($props.character.senses)"
+            v-for="(sense, index) in JSON.parse($props.character.senses || '[]')"
             :key="`sense-${index}`"
           >{{ sense }}</span>
         </div>

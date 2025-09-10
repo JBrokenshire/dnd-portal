@@ -130,8 +130,8 @@
       spellSlotsMap() {
         const map = new Map()
 
-        for (const spellSlotLevel of this.$props.character.class.spell_slots) {
-          map.set(spellSlotLevel.spell_level, spellSlotLevel.spell_slots)
+        for (const spellSlotLevel of this.$props.character.class.spell_levels) {
+          map.set(spellSlotLevel.spell_level, spellSlotLevel.number_of_slots)
         }
 
         return map
