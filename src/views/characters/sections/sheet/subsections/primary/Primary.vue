@@ -128,7 +128,7 @@
   import Inventory from "@/views/characters/sections/sheet/subsections/primary/inventory/Inventory.vue";
   import FeaturesAndTraits from "@/views/characters/sections/sheet/subsections/primary/FeaturesAndTraits.vue";
   import Background from "@/views/characters/sections/sheet/subsections/primary/background/Background.vue";
-  import Notes from "@/views/characters/sections/sheet/subsections/primary/Notes.vue";
+  import Notes from "@/views/characters/sections/sheet/subsections/primary/notes/Notes.vue";
   import Extras from "@/views/characters/sections/sheet/subsections/primary/Extras.vue";
 
   export default {

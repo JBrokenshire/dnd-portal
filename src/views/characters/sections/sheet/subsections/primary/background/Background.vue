@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="mt-[30px]">
+      <div class="mt-[30px] border-b border-b-[#c5313166]">
         <div class="content-section__header">
           <div class="content-section__header-text">Characteristics</div>
         </div>
@@ -77,6 +77,52 @@
             :content="$props.character.weight"
             title="Weight"
           />
+        </div>
+      </div>
+      
+      <div class="text-[14px] mt-4">
+        <!-- Personality Traits -->
+        <div class="mb-1">
+          <div class="text-white font-bold">Personality Traits</div>
+          <div
+            v-for="(trait, index) in JSON.parse($props.character.personality_traits)"
+            :key="`personality-trait-${index}`"
+          >
+            {{ trait }}
+          </div>
+        </div>
+
+        <!-- Ideals -->
+        <div class="mb-1">
+          <div class="text-white font-bold">Ideals</div>
+          <div
+            v-for="(ideal, index) in JSON.parse($props.character.ideals)"
+            :key="`ideal-${index}`"
+          >
+            {{ ideal }}
+          </div>
+        </div>
+
+        <!-- Bonds -->
+        <div class="mb-1">
+          <div class="text-white font-bold">Bonds</div>
+          <div
+            v-for="(bond, index) in JSON.parse($props.character.bonds)"
+            :key="`bond-${index}`"
+          >
+            {{ bond }}
+          </div>
+        </div>
+
+        <!-- Flaws -->
+        <div class="mb-1">
+          <div class="text-white font-bold">Flaws</div>
+          <div
+            v-for="(flaw, index) in JSON.parse($props.character.flaws)"
+            :key="`flaw-${index}`"
+          >
+            {{ flaw }}
+          </div>
         </div>
       </div>
     </div>

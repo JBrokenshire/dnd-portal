@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col mb-[20px]">
-    <div class="flex items-center border-b border-fighter-faded mb-[10px] text-[14px]">
+  <div class="flex flex-col mb-8">
+    <div class="flex items-center border-b border-[#c5313166] mb-[10px] text-[14px]">
       <div class="flex grow shrink basis-0 font-bold uppercase">
         <div class="flex items-center cursor-pointer">
           <!-- Equip Button -->
