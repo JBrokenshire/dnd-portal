@@ -21,6 +21,11 @@
     --color-fighter: #972e2e;
     --color-fighter-dark: #822828;
     --color-fighter-faded: #972e2e40;
+    --color-common: #FFFFFF;
+    --color-uncommon: #5CBE3E;
+    --color-rare: #5991DC;
+    --color-very-rare: #B55DFF;
+    --color-legendary: #F2a546;
 }
 /* END: Colours */
 

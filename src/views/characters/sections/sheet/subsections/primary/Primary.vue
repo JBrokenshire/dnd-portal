@@ -125,7 +125,7 @@
 <script>
   import Actions from "@/views/characters/sections/sheet/subsections/primary/Actions.vue";
   import Spells from "@/views/characters/sections/sheet/subsections/primary/spells/Spells.vue";
-  import Inventory from "@/views/characters/sections/sheet/subsections/primary/Inventory.vue";
+  import Inventory from "@/views/characters/sections/sheet/subsections/primary/inventory/Inventory.vue";
   import FeaturesAndTraits from "@/views/characters/sections/sheet/subsections/primary/FeaturesAndTraits.vue";
   import Background from "@/views/characters/sections/sheet/subsections/primary/background/Background.vue";
   import Notes from "@/views/characters/sections/sheet/subsections/primary/Notes.vue";
