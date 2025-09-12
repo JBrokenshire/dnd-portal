@@ -9,7 +9,7 @@
             @click="toggleItemEquipped"
           >
             <div
-              :class="`absolute bg-fighter block w-[10px] h-[10px] top-1/4 left-1/4 transition-200 ${$props.item.equipped ? 'scale-100' : 'scale-0'}`"
+              :class="`absolute bg-fighter block w-[10px] h-[10px] top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%] transition-200 ${$props.item.equipped ? 'scale-100' : 'scale-0'}`"
             />
           </div>
         </div>
