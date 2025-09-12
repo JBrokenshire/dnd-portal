@@ -89,6 +89,7 @@
                 <bludgeoning v-if="$props.spell.damage_type === 'Bludgeoning'" />
                 <fire v-if="$props.spell.damage_type === 'Fire'" />
                 <psychic v-if="$props.spell.damage_type === 'Psychic'" />
+                <thunder v-if="$props.spell.damage_type === 'Thunder'" />
               </tooltip>
             </button>
           </span>
@@ -114,10 +115,11 @@
   import Bludgeoning from "@/components/icons/damage_types/Bludgeoning.vue";
   import Fire from "@/components/icons/damage_types/Fire.vue";
   import Psychic from "@/components/icons/damage_types/Psychic.vue";
+  import Thunder from "@/components/icons/damage_types/Thunder.vue";
 
   export default {
     name: "Spell",
-    components: {Psychic, Fire, Bludgeoning, Radiant, Tooltip},
+    components: {Thunder, Psychic, Fire, Bludgeoning, Radiant, Tooltip},
     props: {
       spell: {
         type: Object,
@@ -148,7 +150,7 @@
       rangeNumeric() {
         return this.$props.spell.range.includes('ft.')
       }
-    }
+    },
   }
 </script>
 

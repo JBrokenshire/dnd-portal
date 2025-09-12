@@ -1,6 +1,6 @@
 <template>
   <div v-if="$props.spells.length > 0">
-    <div class="border-b border-[#c5313166] flex items-center pb-0 mb-[10px]">
+    <div class="border-b border-[#c5313166] flex items-center pb-0 mb-[4px]">
       <div class="text-fighter text-[13px] font-bold grow shrink basis-0 min-w-0 uppercase">
         {{ $props.title }}
       </div>
@@ -29,7 +29,7 @@
         <div class="spell-level__col-name grow shrink basis-0">Notes</div>
       </div>
 
-      <div class="pt-[5px] pb-[8px]">
+      <div class="pb-[8px]">
         <spell
           v-for="spell in $props.spells"
           :key="`spell-${$props.title}-${spell.name}`"

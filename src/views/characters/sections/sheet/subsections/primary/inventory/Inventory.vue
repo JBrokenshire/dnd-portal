@@ -66,7 +66,7 @@
         for (const item of this.$props.character.inventory) {
           weight += item.item.weight * Math.max(item.quantity, 1)
         }
-        return weight
+        return Math.round(weight * 10) / 10
       }
     },
   }

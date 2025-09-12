@@ -26,7 +26,7 @@
             </button>
           </li>
 
-          <li v-if="$props.character.class.spellcasting_ability">
+          <li v-if="$props.character.class.spellcasting_ability || $props.character.spells.length > 0">
             <button
               :class="`${selectedTab === 'Spells' && 'active'}`"
               class="primary-menu-button"

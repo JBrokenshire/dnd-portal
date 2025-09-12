@@ -3,7 +3,10 @@
     <section class="flex flex-col max-h-full w-full h-[600px]">
       <h2 class="sr-only">Spells</h2>
 
-      <div class="flex w-full border-b border-[#c5313166] mb-[10px] pb-[10px] text-gray-light">
+      <div
+        v-if="$props.character.class.spellcasting_ability"
+        class="flex w-full border-b border-[#c5313166] mb-[10px] pb-[10px] text-gray-light"
+      >
         <div class="flex grow shrink basis-0 justify-center">
           <!-- Spellcasting Modifier -->
           <div class="flex items-center flex-col font-bold leading-[1] cursor-default">
@@ -128,10 +131,23 @@
         return map
       },
       spellSlotsMap() {
-        const map = new Map()
+        const map = new Map([
+          [0, 0],
+          [1, 0],
+          [2, 0],
+          [3, 0],
+          [4, 0],
+          [5, 0],
+          [6, 0],
+          [7, 0],
+          [8, 0],
+          [9, 0],
+        ])
 
-        for (const spellSlotLevel of this.$props.character.class.spell_levels) {
-          map.set(spellSlotLevel.spell_level, spellSlotLevel.number_of_slots)
+        if (this.$props.character.class.spell_levels) {
+          for (const spellSlotLevel of this.$props.character.class.spell_levels) {
+            map.set(spellSlotLevel.spell_level, spellSlotLevel.number_of_slots)
+          }
         }
 
         return map
