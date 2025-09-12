@@ -11,7 +11,7 @@
           v-if="defenses.get('Resistance').length > 0"
           class="defense-summary"
         >
-          <span title="Resistance">
+          <tooltip text="Resistance">
             <svg
               class="defense-summary__icon"
               viewBox="0 0 40.89941 48"
@@ -25,7 +25,7 @@
                 fill="#00c680"
               />
             </svg>
-          </span>
+          </tooltip>
 
           <span>{{ defenses.get('Resistance').join(', ') }}</span>
         </div>
@@ -35,7 +35,7 @@
           v-if="defenses.get('Immunity').length > 0"
           class="defense-summary"
         >
-          <span title="Immunity">
+          <tooltip text="Immunity">
             <svg
               class="defense-summary__icon"
               viewBox="0 0 40.89941 48"
@@ -45,7 +45,7 @@
                 fill="#00c680"
               />
             </svg>
-          </span>
+          </tooltip>
 
           <span>{{ defenses.get('Immunity').join(', ') }}</span>
         </div>
@@ -55,7 +55,7 @@
           v-if="defenses.get('Vulnerability').length > 0"
           class="defense-summary"
         >
-          <span title="Vulnerability">
+          <tooltip text="Vulnerability">
             <svg
               class="defense-summary__icon"
               viewBox="0 0 40.89941 48"
@@ -65,7 +65,7 @@
                 fill="#e40712"
               />
             </svg>
-          </span>
+          </tooltip>
 
           <span>{{ defenses.get('Vulnerability').join(', ') }}</span>
         </div>
@@ -82,8 +82,11 @@
 </template>
 
 <script>
+  import Tooltip from "@/components/ui/Tooltip.vue";
+
   export default {
     name: "Defenses",
+    components: {Tooltip},
     props: {
       character: {
         type: Object,
