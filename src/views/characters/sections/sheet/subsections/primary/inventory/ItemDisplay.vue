@@ -5,7 +5,7 @@
       <div v-if="$props.item.item.equippable">
         <div class="flex flex-wrap">
           <div
-            class="w-[20px] h-[20px] min-w-[20px] m-[2px] cursor-pointer border border-fighter bg-[#10161A] relative"
+            :class="`w-[20px] h-[20px] min-w-[20px] m-[2px] cursor-pointer border ${$props.item.equipped ? 'border-fighter' : 'border-gray-light'} bg-[#10161A] relative`"
             @click="toggleItemEquipped"
           >
             <div
