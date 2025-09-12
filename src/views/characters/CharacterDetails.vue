@@ -109,8 +109,6 @@
           this.character = res.data
 
           this.convertCharacterProperties()
-
-          HelperService.successToast(this.$toast, "Updated character")
         } catch (err) {
           const res = err.response;
           let errorText = "Could not update character, please refresh and try again";

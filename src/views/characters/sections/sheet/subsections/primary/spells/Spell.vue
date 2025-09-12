@@ -54,7 +54,7 @@
         <span class="text-[14px] text-gray-light">{{ $props.saveDc }}</span>
       </div>
       <div v-else-if="$props.spell.is_attack">
-        <div class="font-bold text-[16px]">
+        <div class="text-[16px]">
           <button
             class="text-[20px] h-[36px] w-[42px] text-white inline-flex justify-center items-center bg-transparent border border-fighter rounded-[4px] cursor-pointer transition-200 hover:bg-fighter-faded"
           >

@@ -4,20 +4,20 @@
     <div class="flex items-center pl-[3px] w-[30px]">
       <!-- No Proficiency -->
       <span
-        v-if="$props.proficiencyType === ''"
+        v-if="proficiencyType === ''"
         aria-label="Not Proficient"
         class="cursor-default"
       >
         <tooltip text="Not Proficient">
           <span
-            class="bg-[#333] border border-dotted border-gray-light rounded-[50%] inline-flex w-[10px] h-[10px]"
+            class="bg-[#333] border border-dotted border-gray-light rounded-[50%] inline-flex w-[11px] h-[11px]"
           />
         </tooltip>
       </span>
 
       <!-- Half Proficiency -->
       <span
-        v-if="$props.proficiencyType === 'Half Proficiency'"
+        v-if="proficiencyType === 'Half Proficiency'"
         aria-label="Half Proficiency"
         class="cursor-default"
       >
@@ -36,7 +36,7 @@
 
       <!-- Proficiency -->
       <span
-        v-if="$props.proficiencyType === 'Proficiency'"
+        v-if="proficiencyType === 'Proficiency'"
         aria-label="Proficiency"
         class="cursor-default"
       >
@@ -61,7 +61,7 @@
 
       <!-- Expertise -->
       <span
-        v-if="$props.proficiencyType === 'Expertise'"
+        v-if="proficiencyType === 'Expertise'"
         aria-label="Expertise"
         class="cursor-default"
       >
@@ -102,6 +102,55 @@
     <div class="text-white py-[5px] border-b border-[#c5313166] text-[14px] grow shrink basis-0">
       {{ $props.skill }}
     </div>
+    
+    <!-- Advantage / Disadvantage Indicator -->
+    <div class="border-b border-[#c5313166] self-end">
+      <span class="inline-block align-top h-[17px] w-[17px] cursor-default">
+        <tooltip
+          v-if="$props.advantage && !$props.disadvantage"
+          text="Advantage"
+        >
+          <svg
+            class="w-full h-full"
+            viewBox="0 0 24 24"
+          >
+            <g>
+              <path
+                d="M13.3665 12.5235L12.009 8.78235L10.6516 12.5235H13.3665Z"
+                fill="#00c680"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M12.241 1.13253C12.0909 1.05 11.9091 1.05 11.759 1.13252L2.25904 6.35753C2.09927 6.4454 2 6.61329 2 6.79563V17.2044C2 17.3867 2.09927 17.5546 2.25904 17.6425L11.759 22.8675C11.9091 22.95 12.0909 22.95 12.241 22.8675L21.741 17.6425C21.9007 17.5546 22 17.3867 22 17.2044V6.79563C22 6.61329 21.9007 6.4454 21.741 6.35753L12.241 1.13253ZM18 17.5H15.1222L14.1991 14.9412H9.80091L8.87783 17.5H6L10.5611 5.5H13.4389L18 17.5Z"
+                fill="#00c680"
+                fill-rule="evenodd"
+              />
+            </g>
+          </svg>
+        </tooltip>
+
+        <tooltip
+          v-if="$props.disadvantage && !$props.advantage"
+          text="Disadvantage"
+        >
+          <svg
+            class="h-full w-full"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M15.1364 12C15.1364 9.97059 13.8933 8.41764 11.6113 8.41764H10.1345V15.5823H11.6113C13.8933 15.5823 15.1364 14.0471 15.1364 12Z"
+              fill="#e40712"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M12.241 1.13253C12.0909 1.05 11.9091 1.05 11.759 1.13252L2.25904 6.35753C2.09927 6.4454 2 6.61329 2 6.79563V17.2044C2 17.3867 2.09927 17.5546 2.25904 17.6425L11.759 22.8675C11.9091 22.95 12.0909 22.95 12.241 22.8675L21.741 17.6425C21.9007 17.5546 22 17.3867 22 17.2044V6.79563C22 6.61329 21.9007 6.4454 21.741 6.35753L12.241 1.13253ZM11.6299 18H7.5V6H11.6299C15.4703 6 17.8636 8.48823 17.8636 12C17.8636 15.5118 15.4703 18 11.6299 18Z"
+              fill="#e40712"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </tooltip>
+      </span>
+    </div>
 
     <!-- Modifier  -->
     <div
@@ -139,9 +188,13 @@
         type: Object,
         required: true,
       },
-      proficiencyType: {
-        type: String,
-        default: "",
+      advantage: {
+        type: Boolean,
+        default: false,
+      },
+      disadvantage: {
+        type: Boolean,
+        default: false,
       }
     },
     computed: {
@@ -179,6 +232,9 @@
         }
 
         return mod
+      },
+      proficiencyType() {
+        return this.$props.character.proficient_skills.get(this.$props.skill) || ''
       }
     }
   }

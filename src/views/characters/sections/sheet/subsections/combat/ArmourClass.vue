@@ -37,9 +37,29 @@
       }
     },
     computed: {
-      // TODO: Update when additional ac modifiers have been added
       armourClass() {
-        return 10 + modifierFromLevel(this.$props.character.dexterity)
+        let armourClass = 0
+        let armour = null
+        for (const inventoryItem of this.$props.character.inventory) {
+          if (inventoryItem.item.type !== "armour" || inventoryItem.equipped === false) continue;
+
+          armour = inventoryItem.item.armour
+          break;
+        }
+
+        if (armour) {
+          armourClass = armour.base_ac
+          const dexModifier = modifierFromLevel(this.$props.character.dexterity)
+          if (armour.max_dex_modifier === null) {
+            armourClass += dexModifier
+          } else {
+            armourClass += Math.min(dexModifier, armour.max_dex_modifier)
+          }
+        } else {
+          armourClass = 10 + modifierFromLevel(this.$props.character.dexterity)
+        }
+
+        return armourClass
       }
     }
   }

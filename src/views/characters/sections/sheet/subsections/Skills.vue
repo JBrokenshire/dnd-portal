@@ -41,12 +41,112 @@
         <!-- Skills List -->
         <div class="overflow-y-auto max-h-[700px]">
           <skill-callout
-            v-for="skill in characterSheetSkills.keys()"
-            :key="`skill-${skill}`"
-            :ability-abbreviation="characterSheetSkills.get(skill)"
             :character="$props.character"
-            :proficiency-type="$props.character.proficient_skills.get(skill)"
-            :skill="skill"
+            ability-abbreviation="DEX"
+            skill="Acrobatics"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="WIS"
+            skill="Animal Handling"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="INT"
+            skill="Arcana"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="STR"
+            skill="Athletics"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="CHA"
+            skill="Deception"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="INT"
+            skill="History"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="WIS"
+            skill="Insight"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="CHA"
+            skill="Intimidation"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="INT"
+            skill="Investigation"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="WIS"
+            skill="Medicine"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="INT"
+            skill="Nature"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="WIS"
+            skill="Perception"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="CHA"
+            skill="Performance"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="CHA"
+            skill="Persuasion"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="INT"
+            skill="Religion"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="DEX"
+            skill="Sleight of Hand"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            :disadvantage="stealthDisadvantage"
+            ability-abbreviation="DEX"
+            skill="Stealth"
+          />
+
+          <skill-callout
+            :character="$props.character"
+            ability-abbreviation="WIS"
+            skill="Survival"
           />
         </div>
       </div>
@@ -59,9 +159,7 @@
 </template>
 
 <script>
-
   import SkillCallout from "@/views/characters/sections/sheet/subsections/SkillCallout.vue";
-  import {CharacterSheetSkills} from "@/constants";
 
   export default {
     name: "Skills",
@@ -73,9 +171,14 @@
       }
     },
     computed: {
-      characterSheetSkills() {
-        return CharacterSheetSkills
-      },
+      stealthDisadvantage() {
+        for (const inventoryItem of this.$props.character.inventory) {
+          if (inventoryItem.item.type !== "armour" || inventoryItem.equipped === false) continue;
+
+          return inventoryItem.item.armour.stealth_disadvantage;
+        }
+        return false;
+      }
     },
   }
 </script>
