@@ -99,6 +99,7 @@
           <inventory
             v-if="selectedTab === 'Inventory'"
             :character="$props.character"
+            @update="$emit('update')"
           />
           <features-and-traits
             v-if="selectedTab === 'Features & Traits'"

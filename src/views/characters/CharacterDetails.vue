@@ -23,6 +23,7 @@
 
         <character-subsections
           :character="character"
+          @update="getCharacter"
         />
       </div>
     </div>
@@ -106,7 +107,7 @@
           await CharacterService.update(this.character.id, dto);
           let res = await CharacterService.get(this.character.id);
           this.character = res.data
-          
+
           this.convertCharacterProperties()
 
           HelperService.successToast(this.$toast, "Updated character")

@@ -10,7 +10,10 @@
 
     <combat :character="$props.character" />
 
-    <primary :character="$props.character" />
+    <primary
+      :character="$props.character"
+      @update="$emit('update')"
+    />
   </div>
 </template>
 

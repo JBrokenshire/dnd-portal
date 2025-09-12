@@ -26,6 +26,8 @@
               :key="`inventory-section-${key}`"
               :items="inventoryMap.get(key)"
               :title="key"
+              :character-id="$props.character.id"
+              @update="$emit('update')"
             />
           </div>
         </div>

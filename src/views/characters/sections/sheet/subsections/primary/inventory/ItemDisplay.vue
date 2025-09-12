@@ -88,12 +88,24 @@
 </template>
 
 <script>
+  import HelperService from "@/services/HelperService";
+  import CharacterInventoryItemService from "@/services/CharacterInventoryItemService";
+
   export default {
     name: "ItemDisplay",
     props: {
+      characterId: {
+        type: Number,
+        required: true
+      },
       item: {
         type: Object,
         required: true
+      }
+    },
+    data() {
+      return {
+        loading: false,
       }
     },
     computed: {
@@ -102,8 +114,29 @@
       }
     },
     methods: {
-      toggleItemEquipped() {
-        this.$props.item.equipped = !this.$props.item.equipped
+      async toggleItemEquipped() {
+        if (this.loading) return;
+
+        this.loading = true;
+        try {
+          const dto = {
+            equipped: !this.$props.item.equipped,
+          }
+
+          await CharacterInventoryItemService.update(this.$props.characterId, this.$props.item.id, dto)
+          this.$emit('update')
+        } catch (err) {
+          const res = err.response;
+          let errorText = "Could not update character inventory item, please refresh and try again";
+
+          if (res && res.data.error) {
+            errorText = res.data.error;
+          }
+
+          HelperService.errorToast(this.$toast, err, errorText)
+        } finally {
+          this.loading = false;
+        }
       },
     }
   }

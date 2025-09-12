@@ -22,6 +22,8 @@
         v-for="(item, index) in $props.items"
         :key="`item-display-${index}`"
         :item="item"
+        :character-id="$props.characterId"
+        @update="$emit('update')"
       />
     </div>
   </div>
@@ -45,6 +47,10 @@
       showEquipButton: {
         type: Boolean,
         default: false
+      },
+      characterId: {
+        type: Number,
+        required: true
       }
     },
     computed: {
