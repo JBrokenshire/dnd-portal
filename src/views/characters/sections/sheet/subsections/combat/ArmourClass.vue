@@ -38,13 +38,18 @@
     },
     computed: {
       armourClass() {
-        let armourClass = 0
+        let armourClassBonus = 0
+        let armourClass = 10 + modifierFromLevel(this.$props.character.dexterity)
         let armour = null
+        
         for (const inventoryItem of this.$props.character.inventory) {
-          if (inventoryItem.item.type !== "armour" || inventoryItem.equipped === false) continue;
+          if (inventoryItem.equipped) {
+            if (inventoryItem.item.type === "armour") {
+              armour = inventoryItem.item.armour
+            }
 
-          armour = inventoryItem.item.armour
-          break;
+            armourClassBonus += inventoryItem.item.armour_class_bonus
+          }
         }
 
         if (armour) {
@@ -55,11 +60,9 @@
           } else {
             armourClass += Math.min(dexModifier, armour.max_dex_modifier)
           }
-        } else {
-          armourClass = 10 + modifierFromLevel(this.$props.character.dexterity)
         }
 
-        return armourClass
+        return armourClass + armourClassBonus
       }
     }
   }

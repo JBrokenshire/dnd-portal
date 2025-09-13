@@ -19,47 +19,59 @@
       <div class="relative">
         <div class="flex flex-wrap justify-around">
           <saving-throw-display
-            :modifier="getSavingThrowModifier('Strength', $props.character.strength, $props.character.strength_save_adjustment)"
+            :modifier="getSavingThrowModifier('Strength', $props.character.strength)"
             :proficient="proficientSaves.includes('Strength')"
             ability="STRENGTH"
             class="order-1"
           />
 
           <saving-throw-display
-            :modifier="getSavingThrowModifier('Dexterity', $props.character.dexterity, $props.character.dexterity_save_adjustment)"
+            :modifier="getSavingThrowModifier('Dexterity', $props.character.dexterity)"
             :proficient="proficientSaves.includes('Dexterity')"
             ability="DEXTERITY"
             class="order-3"
           />
 
           <saving-throw-display
-            :modifier="getSavingThrowModifier('Constitution', $props.character.constitution, $props.character.constitution_save_adjustment)"
+            :modifier="getSavingThrowModifier('Constitution', $props.character.constitution)"
             :proficient="proficientSaves.includes('Constitution')"
             ability="CONSTITUTION"
             class="order-5"
           />
 
           <saving-throw-display
-            :modifier="getSavingThrowModifier('Intelligence', $props.character.intelligence, $props.character.intelligence_save_adjustment)"
+            :modifier="getSavingThrowModifier('Intelligence', $props.character.intelligence)"
             :proficient="proficientSaves.includes('Intelligence')"
             ability="INTELLIGENCE"
             class="order-2"
           />
 
           <saving-throw-display
-            :modifier="getSavingThrowModifier('Wisdom', $props.character.wisdom, $props.character.wisdom_save_adjustment)"
+            :modifier="getSavingThrowModifier('Wisdom', $props.character.wisdom)"
             :proficient="proficientSaves.includes('Wisdom')"
             ability="WISDOM"
             class="order-4"
           />
 
           <saving-throw-display
-            :modifier="getSavingThrowModifier('Charisma', $props.character.charisma, $props.character.charisma_save_adjustment)"
+            :modifier="getSavingThrowModifier('Charisma', $props.character.charisma)"
             :proficient="proficientSaves.includes('Charisma')"
             ability="CHARISMA"
             class="order-6"
           />
         </div>
+      </div>
+
+      <div
+        v-if="savingThrowAdjustments.length > 0"
+        class="relative flex flex-col justify-center text-gray-light text-[11px] h-[calc(3.6em+6px)] overflow-hidden leading-[1.2]"
+      >
+        <saving-throw-adjustment
+          v-for="(adjustment, index) in savingThrowAdjustments"
+          :key="`saving-throw-adjustment-${index}`"
+          :text="adjustment.text"
+          :type="adjustment.type"
+        />
       </div>
     </section>
 
@@ -73,10 +85,11 @@
 
   import SavingThrowDisplay from "@/views/characters/sections/sheet/subsections/SavingThrowDisplay.vue";
   import {modifierFromLevel, proficiencyBonusFromLevel} from "@/utils/characterSheet";
+  import SavingThrowAdjustment from "@/views/characters/sections/sheet/subsections/SavingThrowAdjustment.vue";
 
   export default {
     name: "SavingThrows",
-    components: {SavingThrowDisplay},
+    components: {SavingThrowAdjustment, SavingThrowDisplay},
     props: {
       character: {
         type: Object,
@@ -86,13 +99,52 @@
     computed: {
       proficientSaves() {
         return JSON.parse(this.$props.character.class.saves)
+      },
+      saveModifiers() {
+        let saveModifiers = new Map([
+          ["Strength", 0],
+          ["Dexterity", 0],
+          ["Constitution", 0],
+          ["Intelligence", 0],
+          ["Wisdom", 0],
+          ["Charisma", 0],
+        ])
+
+        for (const inventoryItem of this.$props.character.inventory) {
+          if (inventoryItem.equipped) {
+            saveModifiers.set("Strength", saveModifiers.get("Strength") + inventoryItem.item.strength_save_bonus)
+            saveModifiers.set("Dexterity", saveModifiers.get("Dexterity") + inventoryItem.item.dexterity_save_bonus)
+            saveModifiers.set("Constitution", saveModifiers.get("Constitution") + inventoryItem.item.constitution_save_bonus)
+            saveModifiers.set("Intelligence", saveModifiers.get("Intelligence") + inventoryItem.item.intelligence_save_bonus)
+            saveModifiers.set("Wisdom", saveModifiers.get("Wisdom") + inventoryItem.item.wisdom_save_bonus)
+            saveModifiers.set("Charisma", saveModifiers.get("Charisma") + inventoryItem.item.charisma_save_bonus)
+          }
+        }
+        return saveModifiers
+      },
+      savingThrowAdjustments() {
+        const savingThrowAdjustments = []
+        for (const inventoryItem of this.$props.character.inventory) {
+          if (inventoryItem.equipped) {
+            if (inventoryItem.item.saving_throw_bonus_type) {
+              savingThrowAdjustments.push({
+                type: inventoryItem.item.saving_throw_bonus_type,
+                text: inventoryItem.item.saving_throw_bonus_text
+              })
+            }
+          }
+        }
+
+        return savingThrowAdjustments
       }
     },
     methods: {
       proficiencyBonusFromLevel,
       modifierFromLevel,
-      getSavingThrowModifier(ability, level, adjustment) {
-        return modifierFromLevel(level) + (this.proficientSaves.includes(ability) * proficiencyBonusFromLevel(this.$props.character.level)) + adjustment;
+      getSavingThrowModifier(ability, level) {
+        return modifierFromLevel(level) +
+          (this.proficientSaves.includes(ability) * proficiencyBonusFromLevel(this.$props.character.level)) +
+          this.saveModifiers.get(ability);
       },
     }
   }
