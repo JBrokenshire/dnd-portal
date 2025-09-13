@@ -201,3 +201,7 @@ input[type="number"] {
 .damage-type-icon {
     @apply inline-block h-[16px] w-[16px] ml-[3px] align-top
 }
+
+.feature-ability-section {
+    @apply border-l-[3px] border-fighter ml-[4px] my-[5px] text-[12px] py-[5px] pl-[8px]
+}

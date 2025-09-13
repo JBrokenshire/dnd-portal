@@ -26,7 +26,7 @@
             </button>
           </li>
 
-          <li v-if="$props.character.class.spellcasting_ability || $props.character.spells.length > 0">
+          <li v-if="$props.character.class.spellcasting_ability || $props.character.spells">
             <button
               :class="`${selectedTab === 'Spells' && 'active'}`"
               class="primary-menu-button"
@@ -128,7 +128,8 @@
   import Actions from "@/views/characters/sections/sheet/subsections/primary/Actions.vue";
   import Spells from "@/views/characters/sections/sheet/subsections/primary/spells/Spells.vue";
   import Inventory from "@/views/characters/sections/sheet/subsections/primary/inventory/Inventory.vue";
-  import FeaturesAndTraits from "@/views/characters/sections/sheet/subsections/primary/FeaturesAndTraits.vue";
+  import FeaturesAndTraits
+    from "@/views/characters/sections/sheet/subsections/primary/features-and-traits/FeaturesAndTraits.vue";
   import Background from "@/views/characters/sections/sheet/subsections/primary/background/Background.vue";
   import Notes from "@/views/characters/sections/sheet/subsections/primary/notes/Notes.vue";
   import Extras from "@/views/characters/sections/sheet/subsections/primary/Extras.vue";
