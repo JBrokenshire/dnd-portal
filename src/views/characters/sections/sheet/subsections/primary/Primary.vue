@@ -95,6 +95,7 @@
           <spells
             v-if="selectedTab === 'Spells'"
             :character="$props.character"
+            @update="$emit('update')"
           />
           <inventory
             v-if="selectedTab === 'Inventory'"

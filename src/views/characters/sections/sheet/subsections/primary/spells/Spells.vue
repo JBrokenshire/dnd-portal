@@ -63,10 +63,12 @@
               v-for="(spellLevel, index) in characterSpellsMap.entries()"
               :key="`spell-level-${spellLevel[0]}`"
               :attack-modifier="spellAttackModifier"
+              :character-id="$props.character.id"
               :save-dc="spellSaveDC"
               :spell-slots="spellSlotsMap.get(index)"
               :spells="spellLevel[1]"
               :title="spellLevel[0]"
+              @update="$emit('update')"
             />
           </div>
         </div>
@@ -132,21 +134,27 @@
       },
       spellSlotsMap() {
         const map = new Map([
-          [0, 0],
-          [1, 0],
-          [2, 0],
-          [3, 0],
-          [4, 0],
-          [5, 0],
-          [6, 0],
-          [7, 0],
-          [8, 0],
-          [9, 0],
+          [0, {available: 0, used: 0}],
+          [1, {available: 0, used: 0}],
+          [2, {available: 0, used: 0}],
+          [3, {available: 0, used: 0}],
+          [4, {available: 0, used: 0}],
+          [5, {available: 0, used: 0}],
+          [6, {available: 0, used: 0}],
+          [7, {available: 0, used: 0}],
+          [8, {available: 0, used: 0}],
+          [9, {available: 0, used: 0}],
         ])
 
         if (this.$props.character.class.spell_levels) {
           for (const spellSlotLevel of this.$props.character.class.spell_levels) {
-            map.set(spellSlotLevel.spell_level, spellSlotLevel.number_of_slots)
+            map.get(spellSlotLevel.spell_level).available = spellSlotLevel.number_of_slots
+          }
+        }
+
+        if (this.$props.character.used_spell_slots) {
+          for (const usedSpellSlots of this.$props.character.used_spell_slots) {
+            map.get(usedSpellSlots.spell_level).used = usedSpellSlots.spell_slots_used
           }
         }
 

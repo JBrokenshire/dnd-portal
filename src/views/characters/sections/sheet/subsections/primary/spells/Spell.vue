@@ -9,7 +9,9 @@
       </span>
       <button
         v-else
-        class="bg-fighter text-white cursor-pointer relative flex-center p-[5px] w-full h-fit rounded-[3px] uppercase transition-200 hover:bg-fighter-dark"
+        :disabled="!$props.hasAvailableSpellSlots"
+        class="bg-fighter text-white cursor-pointer relative flex-center p-[5px] w-full h-fit rounded-[3px] uppercase transition-200 hover:bg-fighter-dark disabled:bg-gray disabled:hover:bg-gray disabled:cursor-default"
+        @click="$emit('cast')"
       >
         <span class="text-[8px]">Cast</span>
       </button>
@@ -132,6 +134,10 @@
       saveDc: {
         type: Number,
         required: true
+      },
+      hasAvailableSpellSlots: {
+        type: Boolean,
+        default: true
       }
     },
     computed: {
