@@ -102,7 +102,7 @@
     <div class="text-white py-[5px] border-b border-[#c5313166] text-[14px] grow shrink basis-0">
       {{ $props.skill }}
     </div>
-    
+
     <!-- Advantage / Disadvantage Indicator -->
     <div class="border-b border-[#c5313166] self-end">
       <span class="inline-block align-top h-[17px] w-[17px] cursor-default">
@@ -219,7 +219,7 @@
         }
 
         let bonus = proficiencyBonusFromLevel(this.$props.character.level)
-        switch (this.$props.proficiencyType) {
+        switch (this.proficiencyType) {
         case 'Proficiency':
           mod += bonus
           break;
