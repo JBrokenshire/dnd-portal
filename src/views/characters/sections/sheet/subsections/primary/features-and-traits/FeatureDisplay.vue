@@ -1,47 +1,47 @@
 <template>
   <div class="cursor-pointer mb-[13px]">
-    <div class="text-white font-bold leading-[1.2] text-[14px]">{{ $props.trait.name }}</div>
+    <div class="text-white font-bold leading-[1.2] text-[14px]">{{ $props.feature.name }}</div>
     <div class="text-gray-light text-[12px]">
-      <p>{{ $props.trait.description }}</p>
+      <p>{{ $props.feature.description }}</p>
     </div>
 
     <div
-      v-if="$props.trait.trait_spells"
+      v-if="$props.feature.trait_spells"
       class="feature-ability-section"
     >
-      <!-- Trait Spells -->
+      <!-- Feature Spells -->
       <div
-        v-for="(traitSpell, index) in $props.trait.trait_spells"
-        :key="`trait-${$props.trait.name}-trait-spell-${index}`"
+        v-for="(featureSpell, index) in $props.feature.trait_spells"
+        :key="`feature-${$props.feature.name}-feature-spell-${index}`"
         class="flex items-center cursor-pointer"
       >
         <div class="mr-[5px]">
           <span class="text-white">
-            {{ traitSpell.spell.name }}
-            <span class="ml-[.188rem] text-gray-light">({{ numberToPosition(traitSpell.spell.level) }})</span>
+            {{ featureSpell.spell.name }}
+            <span class="ml-[.188rem] text-gray-light">({{ numberToPosition(featureSpell.spell.level) }})</span>
           </span>
         </div>
 
         <div class="text-white flex items-center">
           <div class="inline-flex items-center font-bold mr-[5px]">
             <spell-slot-indicator
-              v-for="use in traitSpell.uses"
-              :key="`trait-spell-${index}-slot-indicator-${use}`"
+              v-for="use in featureSpell.uses"
+              :key="`feature-spell-${index}-slot-indicator-${use}`"
             />
           </div>
           <div class="text-gray-light mr-[5px]">/</div>
-          <div>{{ traitSpell.reset }}</div>
+          <div>{{ featureSpell.reset }}</div>
         </div>
       </div>
     </div>
 
     <div
-      v-if="$props.trait.options"
+      v-if="$props.feature.options"
       class="feature-ability-section"
     >
       <div
-        v-for="(option, index) in $props.trait.options"
-        :key="`trait-${$props.trait.name}-option${index}`"
+        v-for="(option, index) in $props.feature.options"
+        :key="`feature-${$props.feature.name}-option${index}`"
       >
         <div class="font-bold text-white leading-[1.2]">{{ option.name }}</div>
         <div class="text-white mt-[5px]">{{ option.description }}</div>
@@ -54,10 +54,10 @@
   import SpellSlotIndicator from "@/views/characters/sections/sheet/subsections/primary/spells/SpellSlotIndicator.vue";
 
   export default {
-    name: "RaceTraitDisplay",
+    name: "FeatureDisplay",
     components: {SpellSlotIndicator},
     props: {
-      trait: {
+      feature: {
         type: Object,
         required: true
       }
