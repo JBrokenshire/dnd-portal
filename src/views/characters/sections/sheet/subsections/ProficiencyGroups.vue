@@ -17,12 +17,35 @@
       <h2 class="sr-only">Proficiencies & Training</h2>
 
       <div class="relative overflow-y-auto cursor-pointer h-[300px]">
-        <proficiency-callout
-          v-for="(proficiencyGroup) of Object.entries(JSON.parse($props.character.proficiencies))"
-          :key="`proficiency-group-${proficiencyGroup[0]}`"
-          :title="proficiencyGroup[0]"
-          :values="proficiencyGroup[1]"
-        />
+        <!-- Armour -->
+        <div class="border-b border-[#c5313166] mb-2 pb-2">
+          <div class="font-bold uppercase text-[14px] text-gray-light">Armour</div>
+          <div class="text-white text-[13px]">
+            {{ $props.character.proficiencies.armour.slice().sort().join(', ') }}
+          </div>
+        </div>
+
+        <!-- Weapon -->
+        <div class="border-b border-[#c5313166] mb-2 pb-2">
+          <div class="font-bold uppercase text-[14px] text-gray-light">Weapons</div>
+          <div class="text-white text-[13px]">
+            {{ $props.character.proficiencies.weapons.slice().sort().join(', ') }}
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="border-b border-[#c5313166] mb-2 pb-2">
+          <div class="font-bold uppercase text-[14px] text-gray-light">Tools</div>
+          <div class="text-white text-[13px]">{{ $props.character.proficiencies.tools.slice().sort().join(', ') }}</div>
+        </div>
+
+        <!-- Languages -->
+        <div class="border-b border-[#c5313166] mb-2 pb-2">
+          <div class="font-bold uppercase text-[14px] text-gray-light">Languages</div>
+          <div class="text-white text-[13px]">
+            {{ $props.character.proficiencies.languages.slice().sort().join(', ') }}
+          </div>
+        </div>
       </div>
     </section>
 
@@ -33,12 +56,8 @@
 </template>
 
 <script>
-
-  import ProficiencyCallout from "@/views/characters/sections/sheet/subsections/ProficiencyCallout.vue";
-
   export default {
     name: "ProficiencyGroups",
-    components: {ProficiencyCallout},
     props: {
       character: {
         type: Object,

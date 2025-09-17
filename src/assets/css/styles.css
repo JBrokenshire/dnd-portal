@@ -203,5 +203,5 @@ input[type="number"] {
 }
 
 .feature-ability-section {
-    @apply border-l-[3px] border-fighter ml-[4px] my-[5px] text-[12px] py-[5px] pl-[8px]
+    @apply text-white border-l-[3px] border-fighter ml-[4px] my-[5px] text-[12px] py-[5px] pl-[8px]
 }

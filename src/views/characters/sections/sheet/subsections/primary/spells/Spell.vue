@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center cursor-pointer leading-[1] py-[8px]">
+  <div class="flex items-center cursor-pointer leading-[1] py-[4px]">
     <div class="relative w-[35px] pr-[5px]">
       <span
         v-if="$props.spell.level === 0"
@@ -101,7 +101,9 @@
         v-else
         class="text-gray-light"
       >
-        <span class="text-[12px]">{{ $props.spell.effect }}</span>
+        <div class="text-[12px] min-h-[36px] flex items-center">
+          <span>{{ $props.spell.effect }}</span>
+        </div>
       </div>
     </div>
 

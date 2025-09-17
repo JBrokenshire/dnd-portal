@@ -129,6 +129,8 @@
           map.set(profSkill.skill, profSkill.proficiency_type)
         }
         this.character.proficient_skills = map
+
+        this.character.proficiencies = JSON.parse(this.character.proficiencies)
       }
     }
   }
