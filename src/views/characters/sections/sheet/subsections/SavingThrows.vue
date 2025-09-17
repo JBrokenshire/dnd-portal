@@ -63,15 +63,22 @@
       </div>
 
       <div
-        v-if="savingThrowAdjustments.length > 0"
         class="relative flex flex-col justify-center text-gray-light text-[11px] h-[calc(3.6em+6px)] overflow-hidden leading-[1.2]"
       >
-        <saving-throw-adjustment
-          v-for="(adjustment, index) in savingThrowAdjustments"
-          :key="`saving-throw-adjustment-${index}`"
-          :text="adjustment.text"
-          :type="adjustment.type"
-        />
+        <div v-if="savingThrowAdjustments.length > 0">
+          <saving-throw-adjustment
+            v-for="(adjustment, index) in savingThrowAdjustments"
+            :key="`saving-throw-adjustment-${index}`"
+            :text="adjustment.text"
+            :type="adjustment.type"
+          />
+        </div>
+        <div
+          v-else
+          class="text-center"
+        >
+          Saving Throw Modifiers
+        </div>
       </div>
     </section>
 

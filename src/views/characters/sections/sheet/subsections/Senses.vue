@@ -33,12 +33,17 @@
         </div>
 
         <div
-          class="text-[12px] h-[3.6em] leading-[1.2] mt-[6px] overflow-hidden text-white flex-center flex-col flex-wrap"
+          class="text-[12px] h-[3.6em] leading-[1.2] mt-[6px] overflow-hidden text-gray-light flex-center flex-col flex-wrap"
         >
-          <span
-            v-for="(sense, index) in JSON.parse($props.character.senses || '[]')"
-            :key="`sense-${index}`"
-          >{{ sense }}</span>
+          <div v-if="sensesArray.length > 0">
+            <span
+              v-for="(sense, index) in sensesArray"
+              :key="`sense-${index}`"
+            >
+              {{ sense }}
+            </span>
+          </div>
+          <span v-else>Additional Sense Types</span>
         </div>
       </div>
     </section>
@@ -75,6 +80,9 @@
       },
       insight() {
         return 10 + modifierFromLevel(this.$props.character.wisdom) + this.getProficiencyBonus('Insight')
+      },
+      sensesArray() {
+        return JSON.parse(this.$props.character.senses || '[]')
       }
     },
     methods: {
